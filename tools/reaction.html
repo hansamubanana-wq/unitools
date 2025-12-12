@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>反射神経テスト | UniTools</title>
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6703043752248417" crossorigin="anonymous"></script>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛠️</text></svg>">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .no-select { user-select: none; -webkit-user-select: none; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col no-select">
+
+    <header class="p-4 bg-white shadow-sm absolute w-full top-0 z-50">
+        <a href="../index.html" class="text-blue-600 font-bold hover:underline">
+            <i class="fa-solid fa-arrow-left"></i> TOPに戻る
+        </a>
+    </header>
+
+    <main id="gameArea" class="flex-grow flex flex-col items-center justify-center text-center p-4 cursor-pointer transition-colors duration-200 bg-blue-600 text-white">
+        
+        <div id="startScreen">
+            <i class="fa-solid fa-bolt text-6xl mb-4 animate-bounce"></i>
+            <h1 class="text-4xl font-bold mb-4">反射神経テスト</h1>
+            <p class="text-xl mb-8 opacity-90">画面が緑になったらタップ！</p>
+            <p class="text-sm border border-white/50 rounded-full px-4 py-2 inline-block">画面のどこでもタップしてスタート</p>
+        </div>
+
+        <div id="waitScreen" class="hidden">
+            <i class="fa-solid fa-ellipsis text-6xl mb-4"></i>
+            <h2 class="text-4xl font-bold">まだ...</h2>
+        </div>
+
+        <div id="clickScreen" class="hidden">
+            <i class="fa-solid fa-hand-pointer text-6xl mb-4"></i>
+            <h2 class="text-4xl font-bold">今だ！！！</h2>
+        </div>
+
+        <div id="resultScreen" class="hidden">
+            <p class="text-sm mb-2">あなたの記録</p>
+            <h2 class="text-6xl font-bold mb-6"><span id="score">0</span> ms</h2>
+            <p id="rank" class="text-xl font-bold mb-8 text-yellow-300"></p>
+            
+            <button id="retryBtn" class="bg-white text-blue-900 font-bold py-3 px-8 rounded-full text-lg shadow-lg hover:bg-gray-100 transition z-50 relative">
+                もう一度やる
+            </button>
+        </div>
+
+    </main>
+
+    <script>
+        const gameArea = document.getElementById('gameArea');
+        const startScreen = document.getElementById('startScreen');
+        const waitScreen = document.getElementById('waitScreen');
+        const clickScreen = document.getElementById('clickScreen');
+        const resultScreen = document.getElementById('resultScreen');
+        const scoreDisplay = document.getElementById('score');
+        const rankDisplay = document.getElementById('rank');
+        const retryBtn = document.getElementById('retryBtn');
+
+        let startTime = 0;
+        let timeoutId = null;
+        let gameState = 'start'; // start, waiting, clickable, result
+
+        gameArea.addEventListener('mousedown', handleInput);
+        gameArea.addEventListener('touchstart', handleInput);
+
+        function handleInput(e) {
+            if(e.target === retryBtn) return; // リトライボタンなら無視
+            e.preventDefault();
+
+            if (gameState === 'start') {
+                startGame();
+            } else if (gameState === 'waiting') {
+                earlyClick();
+            } else if (gameState === 'clickable') {
+                finishGame();
+            } else if (gameState === 'result') {
+                // 結果画面では何もしない（リトライボタン待ち）
+            }
+        }
+
+        retryBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // 親要素への伝播を止める
+            resetGame();
+        });
+
+        function startGame() {
+            gameState = 'waiting';
+            showScreen(waitScreen);
+            gameArea.className = "flex-grow flex flex-col items-center justify-center text-center p-4 cursor-pointer transition-colors duration-200 bg-red-500 text-white";
+            
+            // 2〜5秒後に緑にする
+            const randomTime = Math.floor(Math.random() * 3000) + 2000;
+            timeoutId = setTimeout(() => {
+                gameState = 'clickable';
+                startTime = Date.now();
+                showScreen(clickScreen);
+                gameArea.className = "flex-grow flex flex-col items-center justify-center text-center p-4 cursor-pointer transition-colors duration-none bg-green-500 text-white";
+            }, randomTime);
+        }
+
+        function earlyClick() {
+            clearTimeout(timeoutId);
+            gameState = 'result';
+            gameArea.className = "flex-grow flex flex-col items-center justify-center text-center p-4 cursor-pointer transition-colors duration-200 bg-slate-800 text-white";
+            showScreen(resultScreen);
+            scoreDisplay.innerText = "---";
+            rankDisplay.innerText = "早すぎます！お手つき⚠️";
+            rankDisplay.className = "text-xl font-bold mb-8 text-red-400";
+        }
+
+        function finishGame() {
+            const endTime = Date.now();
+            const time = endTime - startTime;
+            gameState = 'result';
+            
+            gameArea.className = "flex-grow flex flex-col items-center justify-center text-center p-4 cursor-pointer transition-colors duration-200 bg-blue-600 text-white";
+            showScreen(resultScreen);
+            scoreDisplay.innerText = time;
+            
+            // ランク判定
+            let rankText = "";
+            let rankColor = "text-white";
+            if(time < 200) { rankText = "神レベル！⚡"; rankColor = "text-yellow-300"; }
+            else if(time < 250) { rankText = "プロゲーマー級 🎮"; rankColor = "text-cyan-300"; }
+            else if(time < 300) { rankText = "平均より速い 👍"; rankColor = "text-green-300"; }
+            else { rankText = "もっと頑張ろう 🐢"; rankColor = "text-gray-300"; }
+            
+            rankDisplay.innerText = rankText;
+            rankDisplay.className = `text-xl font-bold mb-8 ${rankColor}`;
+        }
+
+        function resetGame() {
+            gameState = 'start';
+            showScreen(startScreen);
+            gameArea.className = "flex-grow flex flex-col items-center justify-center text-center p-4 cursor-pointer transition-colors duration-200 bg-blue-600 text-white";
+        }
+
+        function showScreen(screen) {
+            [startScreen, waitScreen, clickScreen, resultScreen].forEach(s => s.classList.add('hidden'));
+            screen.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
