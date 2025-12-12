@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文字数カウント | UniTools</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <header class="p-4 bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto max-w-4xl flex justify-between items-center">
+            <a href="../index.html" class="text-blue-600 font-bold hover:underline">
+                <i class="fa-solid fa-arrow-left"></i> TOPに戻る
+            </a>
+            <h1 class="font-bold text-gray-700"><i class="fa-solid fa-pen-nib"></i> 文字数カウンター</h1>
+        </div>
+    </header>
+
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-4xl">
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div class="bg-white p-4 rounded-xl shadow border-l-4 border-blue-500">
+                <p class="text-xs text-gray-500 font-bold">文字数 (すべて)</p>
+                <p class="text-3xl font-bold text-blue-600" id="countAll">0</p>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow border-l-4 border-indigo-500">
+                <p class="text-xs text-gray-500 font-bold">文字数 (空白なし)</p>
+                <p class="text-3xl font-bold text-indigo-600" id="countNoSpace">0</p>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow border-l-4 border-green-500">
+                <p class="text-xs text-gray-500 font-bold">行数</p>
+                <p class="text-3xl font-bold text-green-600" id="countLines">0</p>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow border-l-4 border-orange-500">
+                <p class="text-xs text-gray-500 font-bold">原稿用紙 (400字)</p>
+                <p class="text-3xl font-bold text-orange-600" id="countPaper">0</p>
+            </div>
+        </div>
+
+        <div class="bg-white p-1 rounded-xl shadow-lg border border-gray-200">
+            <textarea id="textInput" class="w-full h-96 p-6 rounded-lg focus:outline-none resize-none text-lg leading-relaxed" placeholder="ここにテキストを入力または貼り付けしてください..."></textarea>
+        </div>
+
+        <div class="flex justify-end mt-4 gap-3">
+            <button id="copyBtn" class="bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-6 rounded-lg transition shadow">
+                <i class="fa-regular fa-copy"></i> テキストをコピー
+            </button>
+            <button id="clearBtn" class="bg-red-50 hover:bg-red-100 text-red-600 font-bold py-2 px-6 rounded-lg transition shadow border border-red-200">
+                <i class="fa-solid fa-trash"></i> クリア
+            </button>
+        </div>
+        
+        <p id="msg" class="text-right text-green-600 text-sm font-bold h-6 mt-2"></p>
+
+    </main>
+
+    <script>
+        const textInput = document.getElementById('textInput');
+        const countAll = document.getElementById('countAll');
+        const countNoSpace = document.getElementById('countNoSpace');
+        const countLines = document.getElementById('countLines');
+        const countPaper = document.getElementById('countPaper');
+        const copyBtn = document.getElementById('copyBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const msg = document.getElementById('msg');
+
+        // 入力があるたびに計算
+        textInput.addEventListener('input', () => {
+            const text = textInput.value;
+            
+            // 全文字数
+            const len = text.length;
+            // 空白（スペース、改行、タブ）を除いた文字数
+            const lenNoSpace = text.replace(/\s/g, '').length;
+            // 行数（改行の数 + 1、ただし空の場合は0）
+            const lines = text.length === 0 ? 0 : text.split('\n').length;
+            // 原稿用紙換算（切り上げ）
+            const paper = Math.ceil(len / 400);
+
+            // 表示更新
+            countAll.innerText = len.toLocaleString();
+            countNoSpace.innerText = lenNoSpace.toLocaleString();
+            countLines.innerText = lines.toLocaleString();
+            countPaper.innerText = paper.toLocaleString() + "枚";
+        });
+
+        // コピー機能
+        copyBtn.addEventListener('click', () => {
+            if (!textInput.value) return;
+            textInput.select();
+            document.execCommand('copy');
+            msg.innerText = "コピーしました！";
+            setTimeout(() => msg.innerText = "", 2000);
+        });
+
+        // クリア機能
+        clearBtn.addEventListener('click', () => {
+            if(confirm('入力内容を消去しますか？')) {
+                textInput.value = '';
+                textInput.dispatchEvent(new Event('input')); // カウントも0に戻す
+            }
+        });
+    </script>
+</body>
+</html>
