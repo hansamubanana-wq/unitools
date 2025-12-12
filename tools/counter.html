@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>文字数カウント | UniTools</title>
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6703043752248417"
+     crossorigin="anonymous"></script>
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛠️</text></svg>">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -66,27 +72,19 @@
         const clearBtn = document.getElementById('clearBtn');
         const msg = document.getElementById('msg');
 
-        // 入力があるたびに計算
         textInput.addEventListener('input', () => {
             const text = textInput.value;
-            
-            // 全文字数
             const len = text.length;
-            // 空白（スペース、改行、タブ）を除いた文字数
             const lenNoSpace = text.replace(/\s/g, '').length;
-            // 行数（改行の数 + 1、ただし空の場合は0）
             const lines = text.length === 0 ? 0 : text.split('\n').length;
-            // 原稿用紙換算（切り上げ）
             const paper = Math.ceil(len / 400);
 
-            // 表示更新
             countAll.innerText = len.toLocaleString();
             countNoSpace.innerText = lenNoSpace.toLocaleString();
             countLines.innerText = lines.toLocaleString();
             countPaper.innerText = paper.toLocaleString() + "枚";
         });
 
-        // コピー機能
         copyBtn.addEventListener('click', () => {
             if (!textInput.value) return;
             textInput.select();
@@ -95,11 +93,10 @@
             setTimeout(() => msg.innerText = "", 2000);
         });
 
-        // クリア機能
         clearBtn.addEventListener('click', () => {
             if(confirm('入力内容を消去しますか？')) {
                 textInput.value = '';
-                textInput.dispatchEvent(new Event('input')); // カウントも0に戻す
+                textInput.dispatchEvent(new Event('input'));
             }
         });
     </script>

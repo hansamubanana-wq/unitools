@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>画像形式変換（JPG/PNG/WebP） | UniTools</title>
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6703043752248417"
+     crossorigin="anonymous"></script>
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛠️</text></svg>">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -70,7 +76,6 @@
         let currentImage = null;
         let originalFileName = "";
 
-        // ドラッグ&ドロップの処理
         dropZone.addEventListener('click', () => fileInput.click());
         dropZone.addEventListener('dragover', (e) => {
             e.preventDefault();
@@ -90,27 +95,23 @@
             if(e.target.files.length) handleFile(e.target.files[0]);
         });
 
-        // 画像読み込み処理
         function handleFile(file) {
             if(!file.type.startsWith('image/')) {
                 alert('画像ファイルを選択してください');
                 return;
             }
-            originalFileName = file.name.split('.')[0]; // 拡張子なしのファイル名
+            originalFileName = file.name.split('.')[0];
             
             const reader = new FileReader();
             reader.onload = (e) => {
                 previewImg.src = e.target.result;
                 editorArea.classList.remove('hidden');
-                
-                // 画像オブジェクト作成（変換用）
                 currentImage = new Image();
                 currentImage.src = e.target.result;
             };
             reader.readAsDataURL(file);
         }
 
-        // 変換＆ダウンロード処理
         downloadBtn.addEventListener('click', () => {
             if(!currentImage) return;
 
@@ -119,7 +120,6 @@
             canvas.height = currentImage.height;
             const ctx = canvas.getContext('2d');
 
-            // 背景が透過の場合、JPG変換時に黒くなるのを防ぐため白背景にする
             if(formatSelect.value === 'image/jpeg') {
                 ctx.fillStyle = "#FFFFFF";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -129,11 +129,8 @@
 
             const format = formatSelect.value;
             const ext = format.split('/')[1].replace('jpeg', 'jpg');
-            
-            // 変換（画質0.9）
             const dataUrl = canvas.toDataURL(format, 0.9);
             
-            // ダウンロードリンク作成
             const link = document.createElement('a');
             link.href = dataUrl;
             link.download = `${originalFileName}_converted.${ext}`;
