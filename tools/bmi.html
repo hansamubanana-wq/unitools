@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI計算機（肥満度チェック） | UniTools</title>
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6703043752248417" crossorigin="anonymous"></script>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛠️</text></svg>">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <header class="p-4 bg-white shadow-sm sticky top-0 z-50">
+        <a href="../index.html" class="text-blue-600 font-bold hover:underline">
+            <i class="fa-solid fa-arrow-left"></i> TOPに戻る
+        </a>
+    </header>
+
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-md">
+        <div class="text-center mb-8">
+            <div class="w-16 h-16 bg-teal-100 text-teal-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
+                <i class="fa-solid fa-weight-scale"></i>
+            </div>
+            <h1 class="text-2xl font-bold">BMI計算機</h1>
+            <p class="text-gray-500 text-sm">身長と体重から肥満度をチェック</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+            <div class="grid grid-cols-2 gap-4 mb-6">
+                <div>
+                    <label class="block text-sm font-bold mb-2">身長 (cm)</label>
+                    <input type="number" id="height" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-500" placeholder="170">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold mb-2">体重 (kg)</label>
+                    <input type="number" id="weight" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-500" placeholder="60">
+                </div>
+            </div>
+
+            <button id="calcBtn" class="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 rounded-lg transition shadow mb-6">
+                計算する
+            </button>
+
+            <div id="resultArea" class="hidden text-center bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <p class="text-sm text-gray-500 mb-1">あなたのBMI</p>
+                <p class="text-4xl font-bold text-slate-800 mb-2" id="bmiValue">22.5</p>
+                <p class="font-bold text-lg mb-4" id="bmiStatus">普通体重</p>
+                
+                <div class="w-full bg-gray-300 h-2 rounded-full overflow-hidden">
+                    <div id="bmiBar" class="bg-teal-500 h-full w-0 transition-all duration-1000"></div>
+                </div>
+                <div class="flex justify-between text-xs text-gray-400 mt-1">
+                    <span>痩せ</span>
+                    <span>普通</span>
+                    <span>肥満</span>
+                </div>
+                
+                <p class="text-xs text-gray-500 mt-4">適正体重: <span id="idealWeight" class="font-bold"></span> kg</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const heightInput = document.getElementById('height');
+        const weightInput = document.getElementById('weight');
+        const calcBtn = document.getElementById('calcBtn');
+        const resultArea = document.getElementById('resultArea');
+        const bmiValueEl = document.getElementById('bmiValue');
+        const bmiStatusEl = document.getElementById('bmiStatus');
+        const bmiBar = document.getElementById('bmiBar');
+        const idealWeightEl = document.getElementById('idealWeight');
+
+        calcBtn.addEventListener('click', () => {
+            const h = parseFloat(heightInput.value);
+            const w = parseFloat(weightInput.value);
+
+            if(!h || !w) return;
+
+            // BMI計算
+            const meters = h / 100;
+            const bmi = w / (meters * meters);
+            const ideal = 22 * (meters * meters);
+
+            // 表示更新
+            resultArea.classList.remove('hidden');
+            bmiValueEl.innerText = bmi.toFixed(1);
+            idealWeightEl.innerText = ideal.toFixed(1);
+
+            // 判定ロジック
+            let status = "";
+            let color = "";
+            let barPercent = 0;
+
+            if(bmi < 18.5) {
+                status = "痩せ型";
+                color = "text-blue-500";
+                barPercent = 20;
+                bmiBar.className = "bg-blue-500 h-full transition-all duration-1000";
+            } else if(bmi < 25) {
+                status = "普通体重";
+                color = "text-teal-500";
+                barPercent = 50;
+                bmiBar.className = "bg-teal-500 h-full transition-all duration-1000";
+            } else if(bmi < 30) {
+                status = "肥満 (1度)";
+                color = "text-yellow-500";
+                barPercent = 80;
+                bmiBar.className = "bg-yellow-500 h-full transition-all duration-1000";
+            } else {
+                status = "肥満 (2度以上)";
+                color = "text-red-500";
+                barPercent = 100;
+                bmiBar.className = "bg-red-500 h-full transition-all duration-1000";
+            }
+
+            bmiStatusEl.innerText = status;
+            bmiStatusEl.className = `font-bold text-lg mb-4 ${color}`;
+            
+            // アニメーション用に遅延させる
+            setTimeout(() => {
+                bmiBar.style.width = barPercent + "%";
+            }, 100);
+        });
+    </script>
+</body>
+</html>

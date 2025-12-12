@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>読み上げメーカー（音声合成） | UniTools</title>
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6703043752248417" crossorigin="anonymous"></script>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛠️</text></svg>">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <header class="p-4 bg-white shadow-sm sticky top-0 z-50">
+        <a href="../index.html" class="text-blue-600 font-bold hover:underline">
+            <i class="fa-solid fa-arrow-left"></i> TOPに戻る
+        </a>
+    </header>
+
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-2xl">
+        <div class="text-center mb-8">
+            <div class="w-16 h-16 bg-pink-100 text-pink-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
+                <i class="fa-solid fa-volume-high"></i>
+            </div>
+            <h1 class="text-2xl font-bold">読み上げメーカー</h1>
+            <p class="text-gray-500 text-sm">AI音声でテキストを読み上げ</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+            <textarea id="textInput" class="w-full h-40 p-4 border border-gray-300 rounded-lg focus:outline-none focus:border-pink-500 resize-none text-lg mb-4" placeholder="ここに喋らせたい言葉を入力してください..."></textarea>
+            
+            <div class="grid grid-cols-2 gap-4 mb-6">
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 mb-1">速さ</label>
+                    <input type="range" id="rate" min="0.5" max="2" step="0.1" value="1" class="w-full accent-pink-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 mb-1">高さ</label>
+                    <input type="range" id="pitch" min="0.5" max="2" step="0.1" value="1" class="w-full accent-pink-500">
+                </div>
+            </div>
+
+            <button id="speakBtn" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 rounded-lg transition shadow flex items-center justify-center gap-2">
+                <i class="fa-solid fa-play"></i> 再生する
+            </button>
+        </div>
+    </main>
+
+    <script>
+        const textInput = document.getElementById('textInput');
+        const speakBtn = document.getElementById('speakBtn');
+        const rateInput = document.getElementById('rate');
+        const pitchInput = document.getElementById('pitch');
+
+        speakBtn.addEventListener('click', () => {
+            const text = textInput.value;
+            if(!text) return;
+
+            // ブラウザの音声合成機能を使う
+            const uttr = new SpeechSynthesisUtterance(text);
+            uttr.lang = "ja-JP"; // 日本語
+            uttr.rate = rateInput.value;
+            uttr.pitch = pitchInput.value;
+
+            // 再生中はボタンを変える
+            speakBtn.disabled = true;
+            speakBtn.classList.add('opacity-50');
+            
+            uttr.onend = () => {
+                speakBtn.disabled = false;
+                speakBtn.classList.remove('opacity-50');
+            };
+
+            window.speechSynthesis.cancel(); // 前のをキャンセル
+            window.speechSynthesis.speak(uttr);
+        });
+    </script>
+</body>
+</html>

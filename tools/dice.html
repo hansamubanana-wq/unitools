@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>サイコロ & コイントス | UniTools</title>
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6703043752248417" crossorigin="anonymous"></script>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛠️</text></svg>">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .shake { animation: shake 0.5s; }
+        @keyframes shake {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(10deg); }
+            50% { transform: rotate(-10deg); }
+            75% { transform: rotate(5deg); }
+            100% { transform: rotate(0deg); }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <header class="p-4 bg-white shadow-sm sticky top-0 z-50">
+        <a href="../index.html" class="text-blue-600 font-bold hover:underline">
+            <i class="fa-solid fa-arrow-left"></i> TOPに戻る
+        </a>
+    </header>
+
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-lg">
+        <div class="text-center mb-8">
+            <h1 class="text-2xl font-bold mb-2">サイコロ & コイン</h1>
+            <p class="text-gray-500 text-sm">ボードゲームや運試しに</p>
+        </div>
+
+        <div class="flex justify-center mb-6 space-x-2">
+            <button id="tabDice" class="bg-blue-600 text-white px-6 py-2 rounded-full font-bold shadow transition">サイコロ</button>
+            <button id="tabCoin" class="bg-white text-gray-500 px-6 py-2 rounded-full font-bold shadow hover:bg-gray-100 transition">コイントス</button>
+        </div>
+
+        <div id="diceArea" class="bg-white p-10 rounded-xl shadow-lg border border-gray-100 text-center">
+            <div id="diceIcon" class="text-9xl text-slate-800 mb-8 transition-transform">
+                <i class="fa-solid fa-dice-one"></i>
+            </div>
+            <button id="rollBtn" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-4 rounded-xl text-xl shadow-lg transition active:scale-95">
+                サイコロを振る
+            </button>
+        </div>
+
+        <div id="coinArea" class="hidden bg-white p-10 rounded-xl shadow-lg border border-gray-100 text-center">
+            <div id="coinIcon" class="w-32 h-32 mx-auto mb-8 rounded-full border-4 border-yellow-500 bg-yellow-100 flex items-center justify-center text-4xl font-bold text-yellow-600 shadow-inner">
+                表
+            </div>
+            <button id="flipBtn" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-4 rounded-xl text-xl shadow-lg transition active:scale-95">
+                コインを投げる
+            </button>
+        </div>
+
+    </main>
+
+    <script>
+        // タブ切り替え
+        const tabDice = document.getElementById('tabDice');
+        const tabCoin = document.getElementById('tabCoin');
+        const diceArea = document.getElementById('diceArea');
+        const coinArea = document.getElementById('coinArea');
+
+        tabDice.addEventListener('click', () => {
+            diceArea.classList.remove('hidden');
+            coinArea.classList.add('hidden');
+            tabDice.className = "bg-blue-600 text-white px-6 py-2 rounded-full font-bold shadow transition";
+            tabCoin.className = "bg-white text-gray-500 px-6 py-2 rounded-full font-bold shadow hover:bg-gray-100 transition";
+        });
+
+        tabCoin.addEventListener('click', () => {
+            diceArea.classList.add('hidden');
+            coinArea.classList.remove('hidden');
+            tabCoin.className = "bg-yellow-500 text-white px-6 py-2 rounded-full font-bold shadow transition";
+            tabDice.className = "bg-white text-gray-500 px-6 py-2 rounded-full font-bold shadow hover:bg-gray-100 transition";
+        });
+
+        // サイコロ機能
+        const diceIcon = document.getElementById('diceIcon');
+        const rollBtn = document.getElementById('rollBtn');
+        const diceClasses = ['fa-dice-one', 'fa-dice-two', 'fa-dice-three', 'fa-dice-four', 'fa-dice-five', 'fa-dice-six'];
+
+        rollBtn.addEventListener('click', () => {
+            diceIcon.classList.add('shake');
+            
+            // 0.5秒後に結果表示
+            setTimeout(() => {
+                diceIcon.classList.remove('shake');
+                const result = Math.floor(Math.random() * 6);
+                diceIcon.innerHTML = `<i class="fa-solid ${diceClasses[result]}"></i>`;
+            }, 500);
+        });
+
+        // コイン機能
+        const coinIcon = document.getElementById('coinIcon');
+        const flipBtn = document.getElementById('flipBtn');
+
+        flipBtn.addEventListener('click', () => {
+            coinIcon.classList.add('animate-spin');
+            
+            setTimeout(() => {
+                coinIcon.classList.remove('animate-spin');
+                const isHeads = Math.random() < 0.5;
+                if(isHeads) {
+                    coinIcon.innerText = "表";
+                    coinIcon.className = "w-32 h-32 mx-auto mb-8 rounded-full border-4 border-yellow-500 bg-yellow-100 flex items-center justify-center text-4xl font-bold text-yellow-600 shadow-inner";
+                } else {
+                    coinIcon.innerText = "裏";
+                    coinIcon.className = "w-32 h-32 mx-auto mb-8 rounded-full border-4 border-gray-400 bg-gray-100 flex items-center justify-center text-4xl font-bold text-gray-500 shadow-inner";
+                }
+            }, 500);
+        });
+    </script>
+</body>
+</html>
