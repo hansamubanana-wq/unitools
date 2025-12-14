@@ -26,40 +26,30 @@
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 2px; }
 
-        /* ▼▼▼ 夜間モード（ダークモード）のデザイン定義 ▼▼▼ */
-        body.night-mode {
-            background-color: #0f172a; /* とても濃い紺色 */
-            color: #e2e8f0;
+        /* ▼▼▼ アニメーション定義（フワッと浮き出る） ▼▼▼ */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px); /* 最初は少し下にいる */
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
         }
-        body.night-mode .glass-panel {
-            background: rgba(15, 23, 42, 0.9);
-            border-color: #334155;
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0); /* 元の位置に戻る */
         }
-        body.night-mode .bg-white {
-            background-color: #1e293b; /* カード背景：濃いグレー */
-            border-color: #334155;
-        }
-        body.night-mode .text-slate-800, 
-        body.night-mode .text-slate-700 {
-            color: #f1f5f9; /* 白文字 */
-        }
-        body.night-mode .text-slate-500,
-        body.night-mode .text-slate-400 {
-            color: #94a3b8; /* 薄いグレー文字 */
-        }
-        /* 検索バーの調整 */
-        body.night-mode input {
-            background-color: #334155;
-            color: white;
-            border-color: #475569;
-        }
-        body.night-mode input::placeholder {
-            color: #94a3b8;
-        }
-        /* アイコン背景の調整（眩しくないように） */
-        body.night-mode .tool-card .rounded-lg {
-            background-color: #0f172a; 
-        }
+        /* 順番に表示させるための遅延 */
+        .delay-100 { transition-delay: 0.1s; }
+        .delay-200 { transition-delay: 0.2s; }
+        
+        /* ▼▼▼ 夜間モード（ダークモード） ▼▼▼ */
+        body.night-mode { background-color: #0f172a; color: #e2e8f0; }
+        body.night-mode .glass-panel { background: rgba(15, 23, 42, 0.9); border-color: #334155; }
+        body.night-mode .bg-white { background-color: #1e293b; border-color: #334155; }
+        body.night-mode .text-slate-800, body.night-mode .text-slate-700 { color: #f1f5f9; }
+        body.night-mode .text-slate-500, body.night-mode .text-slate-400 { color: #94a3b8; }
+        body.night-mode input { background-color: #334155; color: white; border-color: #475569; }
+        body.night-mode input::placeholder { color: #94a3b8; }
+        body.night-mode .tool-card .rounded-lg { background-color: #0f172a; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 flex flex-col min-h-screen relative">
@@ -82,40 +72,30 @@
             </div>
 
             <div class="flex items-center gap-3">
-                <div id="timeIcon" class="text-yellow-500 text-lg">
-                    <i class="fa-solid fa-sun"></i>
-                </div>
-                <div class="md:hidden text-[10px] font-bold text-slate-500 border border-slate-300 px-2 py-0.5 rounded-full">
-                    Free
-                </div>
+                <div id="timeIcon" class="text-yellow-500 text-lg"><i class="fa-solid fa-sun"></i></div>
+                <div class="md:hidden text-[10px] font-bold text-slate-500 border border-slate-300 px-2 py-0.5 rounded-full">Free</div>
             </div>
         </div>
     </header>
 
     <div class="container mx-auto px-4 py-8 flex-grow max-w-5xl">
         
-        <div class="md:hidden mb-6">
+        <div class="md:hidden mb-6 fade-up">
             <div class="relative">
                 <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400"></i>
                 <input type="text" id="searchInputSP" placeholder="何を使いますか？（例：計算、音）" class="w-full bg-white border border-slate-200 rounded-xl pl-12 pr-4 py-3 shadow-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition font-bold text-slate-700">
             </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8" id="infoArea">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 fade-up delay-100" id="infoArea">
             <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-4 h-32 overflow-hidden relative">
                 <h3 class="text-xs font-bold text-slate-400 uppercase mb-2">Updates</h3>
                 <div class="space-y-2 h-full overflow-y-auto custom-scrollbar pb-6">
-                    <div class="text-xs">
-                        <span class="font-mono text-slate-400 mr-2">12.15</span>
-                        <span class="font-bold text-slate-700">自動ダークモード(夜間)対応</span>
-                    </div>
-                    <div class="text-xs">
-                        <span class="font-mono text-slate-400 mr-2">12.15</span>
-                        <span class="font-bold text-slate-700">検索機能・ツール5種追加</span>
-                    </div>
+                    <div class="text-xs"><span class="font-mono text-slate-400 mr-2">12.15</span><span class="font-bold text-slate-700">UIアニメーション実装</span></div>
+                    <div class="text-xs"><span class="font-mono text-slate-400 mr-2">12.15</span><span class="font-bold text-slate-700">自動ダークモード対応</span></div>
+                    <div class="text-xs"><span class="font-mono text-slate-400 mr-2">12.15</span><span class="font-bold text-slate-700">実用ツール5種追加</span></div>
                 </div>
             </div>
-            
             <a href="contact.html" class="bg-slate-900 text-white rounded-xl shadow p-4 flex flex-col justify-center relative overflow-hidden group">
                 <div class="absolute top-[-20%] right-[-20%] w-20 h-20 bg-blue-500 rounded-full blur-2xl opacity-30"></div>
                 <h3 class="text-sm font-bold mb-1"><i class="fa-solid fa-lightbulb text-yellow-400 mr-1"></i> リクエスト募集</h3>
@@ -128,135 +108,105 @@
             <p class="text-slate-400 font-bold">見つかりませんでした</p>
         </div>
 
-        <div class="mb-8 category-section">
-            <h2 class="text-sm font-bold text-slate-500 mb-3 flex items-center gap-2">
-                <i class="fa-solid fa-house text-blue-500"></i> 生活・便利
-            </h2>
+        <div class="mb-8 category-section fade-up">
+            <h2 class="text-sm font-bold text-slate-500 mb-3 flex items-center gap-2"><i class="fa-solid fa-house text-blue-500"></i> 生活・便利</h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3 tool-grid">
-                
-                <a href="tools/countdown.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-blue-400 transition flex flex-col items-center text-center group" data-keywords="時間 カウントダウン タイマー 年越し">
+                <a href="tools/countdown.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-blue-400 transition flex flex-col items-center text-center group fade-up" data-keywords="時間 カウントダウン タイマー 年越し">
                     <div class="w-10 h-10 bg-slate-100 text-slate-700 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-slate-800 group-hover:text-white transition"><i class="fa-regular fa-clock"></i></div>
                     <span class="text-sm font-bold text-slate-700">2026年まで</span>
                 </a>
-
-                <a href="tools/roulette.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-green-400 transition flex flex-col items-center text-center group" data-keywords="抽選 決める ランチ 運">
+                <a href="tools/roulette.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-green-400 transition flex flex-col items-center text-center group fade-up" data-keywords="抽選 決める ランチ 運">
                     <div class="w-10 h-10 bg-green-50 text-green-500 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-green-500 group-hover:text-white transition"><i class="fa-solid fa-arrows-spin"></i></div>
                     <span class="text-sm font-bold text-slate-700">ルーレット</span>
                 </a>
-
-                <a href="tools/todo.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-teal-400 transition flex flex-col items-center text-center group" data-keywords="メモ タスク 管理 リスト">
+                <a href="tools/todo.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-teal-400 transition flex flex-col items-center text-center group fade-up" data-keywords="メモ タスク 管理 リスト">
                     <div class="w-10 h-10 bg-teal-50 text-teal-500 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-teal-500 group-hover:text-white transition"><i class="fa-solid fa-check-double"></i></div>
                     <span class="text-sm font-bold text-slate-700">ToDoリスト</span>
                 </a>
-
-                <a href="tools/warikan.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-yellow-400 transition flex flex-col items-center text-center group" data-keywords="お金 計算 食事 飲み会">
+                <a href="tools/warikan.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-yellow-400 transition flex flex-col items-center text-center group fade-up" data-keywords="お金 計算 食事 飲み会">
                     <div class="w-10 h-10 bg-yellow-50 text-yellow-500 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-yellow-500 group-hover:text-white transition"><i class="fa-solid fa-coins"></i></div>
                     <span class="text-sm font-bold text-slate-700">割り勘計算</span>
                 </a>
-
-                <a href="tools/qrcode.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-gray-400 transition flex flex-col items-center text-center group" data-keywords="画像 生成 URL 変換">
+                <a href="tools/qrcode.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-gray-400 transition flex flex-col items-center text-center group fade-up" data-keywords="画像 生成 URL 変換">
                     <div class="w-10 h-10 bg-gray-100 text-gray-600 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-slate-700 group-hover:text-white transition"><i class="fa-solid fa-qrcode"></i></div>
                     <span class="text-sm font-bold text-slate-700">QR作成</span>
                 </a>
-
-                <a href="tools/password.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-green-400 transition flex flex-col items-center text-center group" data-keywords="セキュリティ 生成 安全 ロック">
+                <a href="tools/password.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-green-400 transition flex flex-col items-center text-center group fade-up" data-keywords="セキュリティ 生成 安全 ロック">
                     <div class="w-10 h-10 bg-green-50 text-green-600 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-green-500 group-hover:text-white transition"><i class="fa-solid fa-key"></i></div>
                     <span class="text-sm font-bold text-slate-700">パスワード</span>
                 </a>
-
-                <a href="tools/water.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-blue-400 transition flex flex-col items-center text-center group" data-keywords="音 スピーカー 掃除 排水">
+                <a href="tools/water.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-blue-400 transition flex flex-col items-center text-center group fade-up" data-keywords="音 スピーカー 掃除 排水">
                     <div class="w-10 h-10 bg-blue-50 text-blue-500 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-blue-500 group-hover:text-white transition"><i class="fa-solid fa-droplet"></i></div>
                     <span class="text-sm font-bold text-slate-700">水抜き音</span>
                 </a>
-
             </div>
         </div>
 
-        <div class="mb-8 category-section">
-            <h2 class="text-sm font-bold text-slate-500 mb-3 flex items-center gap-2">
-                <i class="fa-solid fa-calculator text-teal-500"></i> 計算・学習
-            </h2>
+        <div class="mb-8 category-section fade-up">
+            <h2 class="text-sm font-bold text-slate-500 mb-3 flex items-center gap-2"><i class="fa-solid fa-calculator text-teal-500"></i> 計算・学習</h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3 tool-grid">
-
-                <a href="tools/discount.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-orange-400 transition flex flex-col items-center text-center group" data-keywords="お金 計算 セール 買い物">
+                <a href="tools/discount.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-orange-400 transition flex flex-col items-center text-center group fade-up" data-keywords="お金 計算 セール 買い物">
                     <div class="w-10 h-10 bg-orange-50 text-orange-500 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-orange-500 group-hover:text-white transition"><i class="fa-solid fa-tags"></i></div>
                     <span class="text-sm font-bold text-slate-700">割引計算</span>
                 </a>
-
-                <a href="tools/stopwatch.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-blue-400 transition flex flex-col items-center text-center group" data-keywords="時間 計測 タイマー 運動">
+                <a href="tools/stopwatch.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-blue-400 transition flex flex-col items-center text-center group fade-up" data-keywords="時間 計測 タイマー 運動">
                     <div class="w-10 h-10 bg-blue-50 text-blue-500 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-blue-500 group-hover:text-white transition"><i class="fa-solid fa-stopwatch"></i></div>
                     <span class="text-sm font-bold text-slate-700">ストップウォッチ</span>
                 </a>
-
-                <a href="tools/pomodoro.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-red-400 transition flex flex-col items-center text-center group" data-keywords="時間 集中 勉強 タイマー">
+                <a href="tools/pomodoro.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-red-400 transition flex flex-col items-center text-center group fade-up" data-keywords="時間 集中 勉強 タイマー">
                     <div class="w-10 h-10 bg-red-50 text-red-500 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-red-500 group-hover:text-white transition"><i class="fa-regular fa-clock"></i></div>
                     <span class="text-sm font-bold text-slate-700">集中タイマー</span>
                 </a>
-
-                <a href="tools/age.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-pink-400 transition flex flex-col items-center text-center group" data-keywords="時間 日数 誕生日 記念日">
+                <a href="tools/age.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-pink-400 transition flex flex-col items-center text-center group fade-up" data-keywords="時間 日数 誕生日 記念日">
                     <div class="w-10 h-10 bg-pink-50 text-pink-500 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-pink-500 group-hover:text-white transition"><i class="fa-solid fa-cake-candles"></i></div>
                     <span class="text-sm font-bold text-slate-700">年齢・日数</span>
                 </a>
-
-                <a href="tools/bmi.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-teal-400 transition flex flex-col items-center text-center group" data-keywords="健康 体重 ダイエット 計算">
+                <a href="tools/bmi.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-teal-400 transition flex flex-col items-center text-center group fade-up" data-keywords="健康 体重 ダイエット 計算">
                     <div class="w-10 h-10 bg-teal-50 text-teal-500 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-teal-500 group-hover:text-white transition"><i class="fa-solid fa-weight-scale"></i></div>
                     <span class="text-sm font-bold text-slate-700">BMI計算</span>
                 </a>
-
-                <a href="tools/unit.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-teal-400 transition flex flex-col items-center text-center group" data-keywords="変換 長さ 重さ 換算">
+                <a href="tools/unit.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-teal-400 transition flex flex-col items-center text-center group fade-up" data-keywords="変換 長さ 重さ 換算">
                     <div class="w-10 h-10 bg-teal-50 text-teal-500 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-teal-500 group-hover:text-white transition"><i class="fa-solid fa-arrow-right-arrow-left"></i></div>
                     <span class="text-sm font-bold text-slate-700">単位変換</span>
                 </a>
-
-                <a href="tools/scoreboard.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-blue-700 transition flex flex-col items-center text-center group" data-keywords="スポーツ 点数 ゲーム 試合">
+                <a href="tools/scoreboard.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-blue-700 transition flex flex-col items-center text-center group fade-up" data-keywords="スポーツ 点数 ゲーム 試合">
                     <div class="w-10 h-10 bg-blue-100 text-blue-700 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-blue-600 group-hover:text-white transition"><i class="fa-solid fa-trophy"></i></div>
                     <span class="text-sm font-bold text-slate-700">得点板</span>
                 </a>
-
-                <a href="tools/metronome.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-indigo-400 transition flex flex-col items-center text-center group" data-keywords="音楽 リズム テンポ 練習">
+                <a href="tools/metronome.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-indigo-400 transition flex flex-col items-center text-center group fade-up" data-keywords="音楽 リズム テンポ 練習">
                     <div class="w-10 h-10 bg-indigo-50 text-indigo-500 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-indigo-500 group-hover:text-white transition"><i class="fa-solid fa-sliders"></i></div>
                     <span class="text-sm font-bold text-slate-700">メトロノーム</span>
                 </a>
-
-                <a href="tools/counter.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-indigo-400 transition flex flex-col items-center text-center group" data-keywords="文字数 作文 レポート 原稿">
+                <a href="tools/counter.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-indigo-400 transition flex flex-col items-center text-center group fade-up" data-keywords="文字数 作文 レポート 原稿">
                     <div class="w-10 h-10 bg-indigo-50 text-indigo-500 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-indigo-500 group-hover:text-white transition"><i class="fa-solid fa-pen-nib"></i></div>
                     <span class="text-sm font-bold text-slate-700">文字数</span>
                 </a>
-
             </div>
         </div>
 
-        <div class="mb-12 category-section">
-            <h2 class="text-sm font-bold text-slate-500 mb-3 flex items-center gap-2">
-                <i class="fa-solid fa-gamepad text-purple-500"></i> エンタメ・画像
-            </h2>
+        <div class="mb-12 category-section fade-up">
+            <h2 class="text-sm font-bold text-slate-500 mb-3 flex items-center gap-2"><i class="fa-solid fa-gamepad text-purple-500"></i> エンタメ・画像</h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3 tool-grid">
-
-                <a href="tools/sound.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-cyan-400 transition flex flex-col items-center text-center group" data-keywords="音 聴力 モスキート 健康">
+                <a href="tools/sound.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-cyan-400 transition flex flex-col items-center text-center group fade-up" data-keywords="音 聴力 モスキート 健康">
                     <div class="w-10 h-10 bg-cyan-50 text-cyan-500 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-cyan-500 group-hover:text-white transition"><i class="fa-solid fa-ear-listen"></i></div>
                     <span class="text-sm font-bold text-slate-700">耳年齢</span>
                 </a>
-
-                <a href="tools/reaction.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-red-400 transition flex flex-col items-center text-center group" data-keywords="ゲーム 反射神経 測定">
+                <a href="tools/reaction.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-red-400 transition flex flex-col items-center text-center group fade-up" data-keywords="ゲーム 反射神経 測定">
                     <div class="w-10 h-10 bg-red-50 text-red-500 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-red-500 group-hover:text-white transition"><i class="fa-solid fa-bolt"></i></div>
                     <span class="text-sm font-bold text-slate-700">反射神経</span>
                 </a>
-
-                <a href="tools/dice.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-yellow-400 transition flex flex-col items-center text-center group" data-keywords="ゲーム サイコロ コイン 運">
+                <a href="tools/dice.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-yellow-400 transition flex flex-col items-center text-center group fade-up" data-keywords="ゲーム サイコロ コイン 運">
                     <div class="w-10 h-10 bg-yellow-50 text-yellow-500 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-yellow-500 group-hover:text-white transition"><i class="fa-solid fa-dice"></i></div>
                     <span class="text-sm font-bold text-slate-700">サイコロ</span>
                 </a>
-
-                <a href="tools/converter.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-purple-400 transition flex flex-col items-center text-center group" data-keywords="画像 変換 形式 JPG PNG">
+                <a href="tools/converter.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-purple-400 transition flex flex-col items-center text-center group fade-up" data-keywords="画像 変換 形式 JPG PNG">
                     <div class="w-10 h-10 bg-purple-50 text-purple-500 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-purple-500 group-hover:text-white transition"><i class="fa-solid fa-image"></i></div>
                     <span class="text-sm font-bold text-slate-700">画像変換</span>
                 </a>
-                
-                <a href="tools/tts.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-pink-400 transition flex flex-col items-center text-center group" data-keywords="音声 読み上げ 合成 AI">
+                <a href="tools/tts.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-pink-400 transition flex flex-col items-center text-center group fade-up" data-keywords="音声 読み上げ 合成 AI">
                     <div class="w-10 h-10 bg-pink-50 text-pink-500 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-pink-500 group-hover:text-white transition"><i class="fa-solid fa-volume-high"></i></div>
                     <span class="text-sm font-bold text-slate-700">読み上げ</span>
                 </a>
-
             </div>
         </div>
     </div>
@@ -278,8 +228,6 @@
             const hour = new Date().getHours();
             const body = document.body;
             const icon = document.getElementById('timeIcon');
-
-            // 18時〜翌朝6時はダークモード
             if (hour >= 18 || hour < 6) {
                 body.classList.add('night-mode');
                 if(icon) icon.innerHTML = '<i class="fa-solid fa-moon text-yellow-300"></i>';
@@ -288,12 +236,8 @@
                 if(icon) icon.innerHTML = '<i class="fa-solid fa-sun text-orange-400"></i>';
             }
         }
-        
-        // ページ読み込み時に実行
         checkTime();
-        // 1分ごとにチェック（開いたまま朝/夜が変わったとき用）
         setInterval(checkTime, 60000);
-
 
         // 2. 検索機能
         const searchInputSP = document.getElementById('searchInputSP');
@@ -306,17 +250,12 @@
         function filterTools(query) {
             query = query.toLowerCase().trim();
             let hasResult = false;
-
-            if(query.length > 0) {
-                infoArea.classList.add('hidden');
-            } else {
-                infoArea.classList.remove('hidden');
-            }
+            if(query.length > 0) infoArea.classList.add('hidden');
+            else infoArea.classList.remove('hidden');
 
             toolCards.forEach(card => {
                 const title = card.querySelector('span').innerText.toLowerCase();
                 const keywords = card.getAttribute('data-keywords').toLowerCase();
-                
                 if (title.includes(query) || keywords.includes(query)) {
                     card.classList.remove('hidden');
                     hasResult = true;
@@ -327,22 +266,36 @@
 
             categories.forEach(cat => {
                 const visibleCards = cat.querySelectorAll('.tool-card:not(.hidden)');
-                if (visibleCards.length === 0) {
-                    cat.classList.add('hidden');
-                } else {
-                    cat.classList.remove('hidden');
-                }
+                if (visibleCards.length === 0) cat.classList.add('hidden');
+                else cat.classList.remove('hidden');
             });
 
-            if (!hasResult && query.length > 0) {
-                noResult.classList.remove('hidden');
-            } else {
-                noResult.classList.add('hidden');
-            }
+            if (!hasResult && query.length > 0) noResult.classList.remove('hidden');
+            else noResult.classList.add('hidden');
         }
 
         searchInputSP.addEventListener('input', (e) => filterTools(e.target.value));
         searchInputPC.addEventListener('input', (e) => filterTools(e.target.value));
+
+        // 3. スクロールアニメーション (IntersectionObserver)
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target); // 一度表示したら監視をやめる（パフォーマンス向上）
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-up').forEach(el => {
+            observer.observe(el);
+        });
     </script>
 </body>
 </html>
