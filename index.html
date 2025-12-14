@@ -2,6 +2,9 @@
 <html lang="ja" prefix="og: http://ogp.me/ns#">
 <head>
     <meta charset="UTF-8">
+    
+    <meta name="google-site-verification" content="1mEF67U5oje9Z0aliv19iWVpQri-DEf4J9ORBRj4_eU" />
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="manifest" href="manifest.json">
@@ -29,15 +32,14 @@
         /* ▼▼▼ アニメーション定義（フワッと浮き出る） ▼▼▼ */
         .fade-up {
             opacity: 0;
-            transform: translateY(30px); /* 最初は少し下にいる */
+            transform: translateY(30px);
             transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
             will-change: opacity, transform;
         }
         .fade-up.visible {
             opacity: 1;
-            transform: translateY(0); /* 元の位置に戻る */
+            transform: translateY(0);
         }
-        /* 順番に表示させるための遅延 */
         .delay-100 { transition-delay: 0.1s; }
         .delay-200 { transition-delay: 0.2s; }
         
@@ -218,7 +220,7 @@
                 <a href="privacy.html" class="hover:text-slate-800 transition">Privacy</a>
                 <a href="contact.html" class="hover:text-slate-800 transition">Contact</a>
             </div>
-            <p class="text-[10px] text-slate-300 font-mono">&copy; 2025 VexTools.</p>
+            <p class="text-[10px] text-slate-300 font-mono">&copy; 2025 UniTools.</p>
         </div>
     </footer>
 
@@ -288,7 +290,7 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    observer.unobserve(entry.target); // 一度表示したら監視をやめる（パフォーマンス向上）
+                    observer.unobserve(entry.target);
                 }
             });
         }, observerOptions);
