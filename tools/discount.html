@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>割引計算機 | UniTools</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6703043752248417" crossorigin="anonymous"></script>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛠️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style> body { font-family: 'Noto Sans JP', sans-serif; } </style>
+</head>
+<body class="bg-slate-50 text-slate-700 min-h-screen flex flex-col">
+    <header class="p-6 bg-white border-b border-slate-200 sticky top-0 z-50">
+        <a href="../index.html" class="text-slate-500 hover:text-blue-600 font-bold transition flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> TOPに戻る</a>
+    </header>
+    <main class="flex-grow container mx-auto px-6 py-12 max-w-md">
+        <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
+            <h1 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2"><i class="fa-solid fa-tags text-orange-500"></i> 割引計算</h1>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 mb-1">元の価格 (円)</label>
+                    <input type="number" id="price" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl text-lg font-bold" placeholder="1980">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 mb-1">割引率 (%)</label>
+                    <div class="flex gap-2">
+                        <input type="number" id="percent" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl text-lg font-bold" placeholder="20">
+                        <button onclick="setPer(10)" class="bg-slate-100 px-3 rounded-lg text-sm font-bold text-slate-500">10%</button>
+                        <button onclick="setPer(20)" class="bg-slate-100 px-3 rounded-lg text-sm font-bold text-slate-500">20%</button>
+                        <button onclick="setPer(30)" class="bg-slate-100 px-3 rounded-lg text-sm font-bold text-slate-500">30%</button>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-slate-100">
+                <p class="text-sm text-slate-400 text-center">計算結果</p>
+                <div class="text-center mt-2">
+                    <span class="text-4xl font-bold text-orange-500" id="result">0</span>
+                    <span class="text-xl font-bold text-slate-700">円</span>
+                </div>
+                <p class="text-center text-slate-400 text-sm mt-2"><span id="saved">0</span>円 お得です！</p>
+            </div>
+        </div>
+    </main>
+    <script>
+        const priceIn = document.getElementById('price');
+        const perIn = document.getElementById('percent');
+        const resEl = document.getElementById('result');
+        const savEl = document.getElementById('saved');
+
+        function calc() {
+            const p = Number(priceIn.value);
+            const r = Number(perIn.value);
+            if(!p) return;
+            const saved = Math.floor(p * (r / 100));
+            const final = p - saved;
+            resEl.innerText = final.toLocaleString();
+            savEl.innerText = saved.toLocaleString();
+        }
+        function setPer(n) { perIn.value = n; calc(); }
+        priceIn.addEventListener('input', calc);
+        perIn.addEventListener('input', calc);
+    </script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>モスキート音（耳年齢チェック） | UniTools</title>
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6703043752248417" crossorigin="anonymous"></script>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛠️</text></svg>">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans JP', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-700 min-h-screen flex flex-col">
+
+    <header class="p-6 bg-white border-b border-slate-200 sticky top-0 z-50">
+        <a href="../index.html" class="text-slate-500 hover:text-blue-600 font-bold transition flex items-center gap-2">
+            <i class="fa-solid fa-arrow-left"></i> TOPに戻る
+        </a>
+    </header>
+
+    <main class="flex-grow container mx-auto px-6 py-12 max-w-lg">
+        <div class="text-center mb-10">
+            <div class="w-16 h-16 bg-cyan-50 text-cyan-500 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4 shadow-sm">
+                <i class="fa-solid fa-ear-listen"></i>
+            </div>
+            <h1 class="text-2xl font-bold text-slate-800">耳年齢チェック</h1>
+            <p class="text-slate-500 text-sm mt-2">あなたの耳は何歳レベル？</p>
+        </div>
+
+        <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
+            
+            <p class="text-xs text-red-500 font-bold mb-6 text-center bg-red-50 p-3 rounded-lg">
+                <i class="fa-solid fa-triangle-exclamation"></i> 音量に注意してください
+            </p>
+
+            <div class="space-y-4">
+                <button onclick="playSound(8000)" class="w-full bg-slate-100 hover:bg-cyan-100 text-slate-700 hover:text-cyan-700 font-bold py-4 rounded-xl transition flex justify-between items-center px-6 group">
+                    <span>8,000 Hz</span>
+                    <span class="text-xs bg-slate-200 group-hover:bg-cyan-200 px-2 py-1 rounded">誰でも聞こえる</span>
+                </button>
+
+                <button onclick="playSound(12000)" class="w-full bg-slate-100 hover:bg-green-100 text-slate-700 hover:text-green-700 font-bold py-4 rounded-xl transition flex justify-between items-center px-6 group">
+                    <span>12,000 Hz</span>
+                    <span class="text-xs bg-slate-200 group-hover:bg-green-200 px-2 py-1 rounded">40代以下</span>
+                </button>
+
+                <button onclick="playSound(15000)" class="w-full bg-slate-100 hover:bg-yellow-100 text-slate-700 hover:text-yellow-700 font-bold py-4 rounded-xl transition flex justify-between items-center px-6 group">
+                    <span>15,000 Hz</span>
+                    <span class="text-xs bg-slate-200 group-hover:bg-yellow-200 px-2 py-1 rounded">30代以下</span>
+                </button>
+
+                <button onclick="playSound(17000)" class="w-full bg-slate-100 hover:bg-orange-100 text-slate-700 hover:text-orange-700 font-bold py-4 rounded-xl transition flex justify-between items-center px-6 group">
+                    <span>17,000 Hz</span>
+                    <span class="text-xs bg-slate-200 group-hover:bg-orange-200 px-2 py-1 rounded">20代以下</span>
+                </button>
+
+                <button onclick="playSound(20000)" class="w-full bg-slate-100 hover:bg-purple-100 text-slate-700 hover:text-purple-700 font-bold py-4 rounded-xl transition flex justify-between items-center px-6 group">
+                    <span>20,000 Hz</span>
+                    <span class="text-xs bg-slate-200 group-hover:bg-purple-200 px-2 py-1 rounded">10代以下</span>
+                </button>
+            </div>
+
+            <div id="playing" class="hidden mt-6 text-center text-cyan-600 font-bold animate-pulse">
+                <i class="fa-solid fa-volume-high"></i> 再生中...
+            </div>
+            
+            <button onclick="stopSound()" class="w-full mt-6 border border-slate-300 text-slate-500 font-bold py-3 rounded-lg hover:bg-slate-50 transition">
+                音を止める
+            </button>
+
+        </div>
+    </main>
+
+    <script>
+        let audioCtx;
+        let oscillator;
+
+        function playSound(freq) {
+            // すでに鳴ってたら止める
+            stopSound();
+
+            // Web Audio APIの初期化（ユーザー操作が必要）
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+
+            // オシレーター（発振器）作成
+            oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+
+            oscillator.type = 'sine'; // 正弦波（ピーー）
+            oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            
+            // 音量調整（いきなり爆音にならないように）
+            gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
+            oscillator.start();
+            document.getElementById('playing').classList.remove('hidden');
+            
+            // 3秒後に自動停止
+            setTimeout(stopSound, 3000);
+        }
+
+        function stopSound() {
+            if (oscillator) {
+                try {
+                    oscillator.stop();
+                    oscillator.disconnect();
+                } catch(e){}
+                oscillator = null;
+            }
+            document.getElementById('playing').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
