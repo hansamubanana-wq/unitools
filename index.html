@@ -13,7 +13,7 @@
      crossorigin="anonymous"></script>
     
     <title>UniTools | 便利ツールまとめサイト</title>
-    <meta name="description" content="登録不要・インストール不要の無料Webツールまとめサイト。タイマー、ToDo、割り勘、ルーレット、水抜き音などが洗練されたデザインですぐに使えます。">
+    <meta name="description" content="登録不要・インストール不要の無料Webツールまとめサイト。ストップウォッチ、割引計算、年齢計算、モスキート音、水抜き音などが洗練されたデザインですぐに使えます。">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -40,7 +40,13 @@
                 <span class="text-blue-600"><i class="fa-solid fa-cube"></i></span>
                 UniTools
             </a>
-            <div class="text-[10px] font-bold text-slate-500 border border-slate-300 px-2 py-0.5 rounded-full">
+            
+            <div class="relative hidden md:block w-64">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-sm"></i>
+                <input type="text" id="searchInputPC" placeholder="ツールを検索..." class="w-full bg-slate-100 border border-slate-200 rounded-full pl-9 pr-4 py-1.5 text-sm focus:outline-none focus:bg-white focus:border-blue-400 transition">
+            </div>
+
+            <div class="md:hidden text-[10px] font-bold text-slate-500 border border-slate-300 px-2 py-0.5 rounded-full">
                 All Free
             </div>
         </div>
@@ -48,21 +54,24 @@
 
     <div class="container mx-auto px-4 py-8 flex-grow max-w-5xl">
         
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+        <div class="md:hidden mb-6">
+            <div class="relative">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400"></i>
+                <input type="text" id="searchInputSP" placeholder="何を使いますか？（例：計算、音）" class="w-full bg-white border border-slate-200 rounded-xl pl-12 pr-4 py-3 shadow-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition font-bold text-slate-700">
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8" id="infoArea">
             <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-4 h-32 overflow-hidden relative">
                 <h3 class="text-xs font-bold text-slate-400 uppercase mb-2">Updates</h3>
                 <div class="space-y-2 h-full overflow-y-auto custom-scrollbar pb-6">
                     <div class="text-xs">
                         <span class="font-mono text-slate-400 mr-2">12.15</span>
-                        <span class="font-bold text-slate-700">ガチ実用ツール5選を追加</span>
+                        <span class="font-bold text-slate-700">検索機能を追加しました</span>
                     </div>
                     <div class="text-xs">
                         <span class="font-mono text-slate-400 mr-2">12.15</span>
-                        <span class="font-bold text-slate-700">ストップウォッチ修正＆UI改善</span>
-                    </div>
-                    <div class="text-xs">
-                        <span class="font-mono text-slate-400 mr-2">12.14</span>
-                        <span class="font-bold text-slate-700">モスキート音・カウントダウン追加</span>
+                        <span class="font-bold text-slate-700">実用ツール5種追加</span>
                     </div>
                 </div>
             </div>
@@ -74,132 +83,137 @@
             </a>
         </div>
 
-        <div class="mb-8">
+        <div id="noResult" class="hidden text-center py-10">
+            <div class="text-4xl text-slate-300 mb-2"><i class="fa-solid fa-magnifying-glass"></i></div>
+            <p class="text-slate-400 font-bold">見つかりませんでした</p>
+        </div>
+
+        <div class="mb-8 category-section">
             <h2 class="text-sm font-bold text-slate-500 mb-3 flex items-center gap-2">
                 <i class="fa-solid fa-house text-blue-500"></i> 生活・便利
             </h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 tool-grid">
                 
-                <a href="tools/countdown.html" class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-blue-400 transition flex flex-col items-center text-center">
-                    <div class="w-10 h-10 bg-slate-100 text-slate-700 rounded-lg flex items-center justify-center text-lg mb-2"><i class="fa-regular fa-clock"></i></div>
+                <a href="tools/countdown.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-blue-400 transition flex flex-col items-center text-center group" data-keywords="時間 カウントダウン タイマー 年越し">
+                    <div class="w-10 h-10 bg-slate-100 text-slate-700 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-slate-800 group-hover:text-white transition"><i class="fa-regular fa-clock"></i></div>
                     <span class="text-sm font-bold text-slate-700">2026年まで</span>
                 </a>
 
-                <a href="tools/roulette.html" class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-green-400 transition flex flex-col items-center text-center">
-                    <div class="w-10 h-10 bg-green-50 text-green-500 rounded-lg flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-arrows-spin"></i></div>
+                <a href="tools/roulette.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-green-400 transition flex flex-col items-center text-center group" data-keywords="抽選 決める ランチ 運">
+                    <div class="w-10 h-10 bg-green-50 text-green-500 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-green-500 group-hover:text-white transition"><i class="fa-solid fa-arrows-spin"></i></div>
                     <span class="text-sm font-bold text-slate-700">ルーレット</span>
                 </a>
 
-                <a href="tools/todo.html" class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-teal-400 transition flex flex-col items-center text-center">
-                    <div class="w-10 h-10 bg-teal-50 text-teal-500 rounded-lg flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-check-double"></i></div>
+                <a href="tools/todo.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-teal-400 transition flex flex-col items-center text-center group" data-keywords="メモ タスク 管理 リスト">
+                    <div class="w-10 h-10 bg-teal-50 text-teal-500 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-teal-500 group-hover:text-white transition"><i class="fa-solid fa-check-double"></i></div>
                     <span class="text-sm font-bold text-slate-700">ToDoリスト</span>
                 </a>
 
-                <a href="tools/warikan.html" class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-yellow-400 transition flex flex-col items-center text-center">
-                    <div class="w-10 h-10 bg-yellow-50 text-yellow-500 rounded-lg flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-coins"></i></div>
+                <a href="tools/warikan.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-yellow-400 transition flex flex-col items-center text-center group" data-keywords="お金 計算 食事 飲み会">
+                    <div class="w-10 h-10 bg-yellow-50 text-yellow-500 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-yellow-500 group-hover:text-white transition"><i class="fa-solid fa-coins"></i></div>
                     <span class="text-sm font-bold text-slate-700">割り勘計算</span>
                 </a>
 
-                <a href="tools/qrcode.html" class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-gray-400 transition flex flex-col items-center text-center">
-                    <div class="w-10 h-10 bg-gray-100 text-gray-600 rounded-lg flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-qrcode"></i></div>
+                <a href="tools/qrcode.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-gray-400 transition flex flex-col items-center text-center group" data-keywords="画像 生成 URL 変換">
+                    <div class="w-10 h-10 bg-gray-100 text-gray-600 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-slate-700 group-hover:text-white transition"><i class="fa-solid fa-qrcode"></i></div>
                     <span class="text-sm font-bold text-slate-700">QR作成</span>
                 </a>
 
-                <a href="tools/password.html" class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-green-400 transition flex flex-col items-center text-center">
-                    <div class="w-10 h-10 bg-green-50 text-green-600 rounded-lg flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-key"></i></div>
+                <a href="tools/password.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-green-400 transition flex flex-col items-center text-center group" data-keywords="セキュリティ 生成 安全 ロック">
+                    <div class="w-10 h-10 bg-green-50 text-green-600 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-green-500 group-hover:text-white transition"><i class="fa-solid fa-key"></i></div>
                     <span class="text-sm font-bold text-slate-700">パスワード</span>
                 </a>
 
-                <a href="tools/water.html" class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-blue-400 transition flex flex-col items-center text-center">
-                    <div class="w-10 h-10 bg-blue-50 text-blue-500 rounded-lg flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-droplet"></i></div>
+                <a href="tools/water.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-blue-400 transition flex flex-col items-center text-center group" data-keywords="音 スピーカー 掃除 排水">
+                    <div class="w-10 h-10 bg-blue-50 text-blue-500 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-blue-500 group-hover:text-white transition"><i class="fa-solid fa-droplet"></i></div>
                     <span class="text-sm font-bold text-slate-700">水抜き音</span>
                 </a>
 
             </div>
         </div>
 
-        <div class="mb-8">
+        <div class="mb-8 category-section">
             <h2 class="text-sm font-bold text-slate-500 mb-3 flex items-center gap-2">
                 <i class="fa-solid fa-calculator text-teal-500"></i> 計算・学習
             </h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 tool-grid">
 
-                <a href="tools/discount.html" class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-orange-400 transition flex flex-col items-center text-center">
-                    <div class="w-10 h-10 bg-orange-50 text-orange-500 rounded-lg flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-tags"></i></div>
+                <a href="tools/discount.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-orange-400 transition flex flex-col items-center text-center group" data-keywords="お金 計算 セール 買い物">
+                    <div class="w-10 h-10 bg-orange-50 text-orange-500 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-orange-500 group-hover:text-white transition"><i class="fa-solid fa-tags"></i></div>
                     <span class="text-sm font-bold text-slate-700">割引計算</span>
                 </a>
 
-                <a href="tools/stopwatch.html" class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-blue-400 transition flex flex-col items-center text-center">
-                    <div class="w-10 h-10 bg-blue-50 text-blue-500 rounded-lg flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-stopwatch"></i></div>
+                <a href="tools/stopwatch.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-blue-400 transition flex flex-col items-center text-center group" data-keywords="時間 計測 タイマー 運動">
+                    <div class="w-10 h-10 bg-blue-50 text-blue-500 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-blue-500 group-hover:text-white transition"><i class="fa-solid fa-stopwatch"></i></div>
                     <span class="text-sm font-bold text-slate-700">ストップウォッチ</span>
                 </a>
 
-                <a href="tools/pomodoro.html" class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-red-400 transition flex flex-col items-center text-center">
-                    <div class="w-10 h-10 bg-red-50 text-red-500 rounded-lg flex items-center justify-center text-lg mb-2"><i class="fa-regular fa-clock"></i></div>
+                <a href="tools/pomodoro.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-red-400 transition flex flex-col items-center text-center group" data-keywords="時間 集中 勉強 タイマー">
+                    <div class="w-10 h-10 bg-red-50 text-red-500 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-red-500 group-hover:text-white transition"><i class="fa-regular fa-clock"></i></div>
                     <span class="text-sm font-bold text-slate-700">集中タイマー</span>
                 </a>
 
-                <a href="tools/age.html" class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-pink-400 transition flex flex-col items-center text-center">
-                    <div class="w-10 h-10 bg-pink-50 text-pink-500 rounded-lg flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-cake-candles"></i></div>
+                <a href="tools/age.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-pink-400 transition flex flex-col items-center text-center group" data-keywords="時間 日数 誕生日 記念日">
+                    <div class="w-10 h-10 bg-pink-50 text-pink-500 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-pink-500 group-hover:text-white transition"><i class="fa-solid fa-cake-candles"></i></div>
                     <span class="text-sm font-bold text-slate-700">年齢・日数</span>
                 </a>
 
-                <a href="tools/bmi.html" class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-teal-400 transition flex flex-col items-center text-center">
-                    <div class="w-10 h-10 bg-teal-50 text-teal-500 rounded-lg flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-weight-scale"></i></div>
+                <a href="tools/bmi.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-teal-400 transition flex flex-col items-center text-center group" data-keywords="健康 体重 ダイエット 計算">
+                    <div class="w-10 h-10 bg-teal-50 text-teal-500 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-teal-500 group-hover:text-white transition"><i class="fa-solid fa-weight-scale"></i></div>
                     <span class="text-sm font-bold text-slate-700">BMI計算</span>
                 </a>
 
-                <a href="tools/unit.html" class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-teal-400 transition flex flex-col items-center text-center">
-                    <div class="w-10 h-10 bg-teal-50 text-teal-500 rounded-lg flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-arrow-right-arrow-left"></i></div>
+                <a href="tools/unit.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-teal-400 transition flex flex-col items-center text-center group" data-keywords="変換 長さ 重さ 換算">
+                    <div class="w-10 h-10 bg-teal-50 text-teal-500 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-teal-500 group-hover:text-white transition"><i class="fa-solid fa-arrow-right-arrow-left"></i></div>
                     <span class="text-sm font-bold text-slate-700">単位変換</span>
                 </a>
 
-                <a href="tools/scoreboard.html" class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-blue-700 transition flex flex-col items-center text-center">
-                    <div class="w-10 h-10 bg-blue-100 text-blue-700 rounded-lg flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-trophy"></i></div>
+                <a href="tools/scoreboard.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-blue-700 transition flex flex-col items-center text-center group" data-keywords="スポーツ 点数 ゲーム 試合">
+                    <div class="w-10 h-10 bg-blue-100 text-blue-700 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-blue-600 group-hover:text-white transition"><i class="fa-solid fa-trophy"></i></div>
                     <span class="text-sm font-bold text-slate-700">得点板</span>
                 </a>
 
-                <a href="tools/metronome.html" class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-indigo-400 transition flex flex-col items-center text-center">
-                    <div class="w-10 h-10 bg-indigo-50 text-indigo-500 rounded-lg flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-sliders"></i></div>
+                <a href="tools/metronome.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-indigo-400 transition flex flex-col items-center text-center group" data-keywords="音楽 リズム テンポ 練習">
+                    <div class="w-10 h-10 bg-indigo-50 text-indigo-500 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-indigo-500 group-hover:text-white transition"><i class="fa-solid fa-sliders"></i></div>
                     <span class="text-sm font-bold text-slate-700">メトロノーム</span>
                 </a>
 
-                <a href="tools/counter.html" class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-indigo-400 transition flex flex-col items-center text-center">
-                    <div class="w-10 h-10 bg-indigo-50 text-indigo-500 rounded-lg flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-pen-nib"></i></div>
+                <a href="tools/counter.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-indigo-400 transition flex flex-col items-center text-center group" data-keywords="文字数 作文 レポート 原稿">
+                    <div class="w-10 h-10 bg-indigo-50 text-indigo-500 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-indigo-500 group-hover:text-white transition"><i class="fa-solid fa-pen-nib"></i></div>
                     <span class="text-sm font-bold text-slate-700">文字数</span>
                 </a>
 
             </div>
         </div>
 
-        <div class="mb-12">
+        <div class="mb-12 category-section">
             <h2 class="text-sm font-bold text-slate-500 mb-3 flex items-center gap-2">
                 <i class="fa-solid fa-gamepad text-purple-500"></i> エンタメ・画像
             </h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 tool-grid">
 
-                <a href="tools/sound.html" class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-cyan-400 transition flex flex-col items-center text-center">
-                    <div class="w-10 h-10 bg-cyan-50 text-cyan-500 rounded-lg flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-ear-listen"></i></div>
+                <a href="tools/sound.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-cyan-400 transition flex flex-col items-center text-center group" data-keywords="音 聴力 モスキート 健康">
+                    <div class="w-10 h-10 bg-cyan-50 text-cyan-500 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-cyan-500 group-hover:text-white transition"><i class="fa-solid fa-ear-listen"></i></div>
                     <span class="text-sm font-bold text-slate-700">耳年齢</span>
                 </a>
 
-                <a href="tools/reaction.html" class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-red-400 transition flex flex-col items-center text-center">
-                    <div class="w-10 h-10 bg-red-50 text-red-500 rounded-lg flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-bolt"></i></div>
+                <a href="tools/reaction.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-red-400 transition flex flex-col items-center text-center group" data-keywords="ゲーム 反射神経 測定">
+                    <div class="w-10 h-10 bg-red-50 text-red-500 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-red-500 group-hover:text-white transition"><i class="fa-solid fa-bolt"></i></div>
                     <span class="text-sm font-bold text-slate-700">反射神経</span>
                 </a>
 
-                <a href="tools/dice.html" class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-yellow-400 transition flex flex-col items-center text-center">
-                    <div class="w-10 h-10 bg-yellow-50 text-yellow-500 rounded-lg flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-dice"></i></div>
+                <a href="tools/dice.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-yellow-400 transition flex flex-col items-center text-center group" data-keywords="ゲーム サイコロ コイン 運">
+                    <div class="w-10 h-10 bg-yellow-50 text-yellow-500 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-yellow-500 group-hover:text-white transition"><i class="fa-solid fa-dice"></i></div>
                     <span class="text-sm font-bold text-slate-700">サイコロ</span>
                 </a>
 
-                <a href="tools/converter.html" class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-purple-400 transition flex flex-col items-center text-center">
-                    <div class="w-10 h-10 bg-purple-50 text-purple-500 rounded-lg flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-image"></i></div>
+                <a href="tools/converter.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-purple-400 transition flex flex-col items-center text-center group" data-keywords="画像 変換 形式 JPG PNG">
+                    <div class="w-10 h-10 bg-purple-50 text-purple-500 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-purple-500 group-hover:text-white transition"><i class="fa-solid fa-image"></i></div>
                     <span class="text-sm font-bold text-slate-700">画像変換</span>
                 </a>
                 
-                <a href="tools/tts.html" class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-pink-400 transition flex flex-col items-center text-center">
-                    <div class="w-10 h-10 bg-pink-50 text-pink-500 rounded-lg flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-volume-high"></i></div>
+                <a href="tools/tts.html" class="tool-card bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-pink-400 transition flex flex-col items-center text-center group" data-keywords="音声 読み上げ 合成 AI">
+                    <div class="w-10 h-10 bg-pink-50 text-pink-500 rounded-lg flex items-center justify-center text-lg mb-2 group-hover:bg-pink-500 group-hover:text-white transition"><i class="fa-solid fa-volume-high"></i></div>
                     <span class="text-sm font-bold text-slate-700">読み上げ</span>
                 </a>
 
@@ -217,5 +231,58 @@
             <p class="text-[10px] text-slate-300 font-mono">&copy; 2025 UniTools.</p>
         </div>
     </footer>
+
+    <script>
+        const searchInputSP = document.getElementById('searchInputSP');
+        const searchInputPC = document.getElementById('searchInputPC');
+        const toolCards = document.querySelectorAll('.tool-card');
+        const categories = document.querySelectorAll('.category-section');
+        const noResult = document.getElementById('noResult');
+        const infoArea = document.getElementById('infoArea');
+
+        function filterTools(query) {
+            query = query.toLowerCase().trim();
+            let hasResult = false;
+
+            // 検索中はインフォメーションを隠す
+            if(query.length > 0) {
+                infoArea.classList.add('hidden');
+            } else {
+                infoArea.classList.remove('hidden');
+            }
+
+            toolCards.forEach(card => {
+                const title = card.querySelector('span').innerText.toLowerCase();
+                const keywords = card.getAttribute('data-keywords').toLowerCase();
+                
+                if (title.includes(query) || keywords.includes(query)) {
+                    card.classList.remove('hidden');
+                    hasResult = true;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            // カテゴリごとの表示制御（全部隠れてたらカテゴリ名も消す）
+            categories.forEach(cat => {
+                const visibleCards = cat.querySelectorAll('.tool-card:not(.hidden)');
+                if (visibleCards.length === 0) {
+                    cat.classList.add('hidden');
+                } else {
+                    cat.classList.remove('hidden');
+                }
+            });
+
+            // 結果なし表示
+            if (!hasResult && query.length > 0) {
+                noResult.classList.remove('hidden');
+            } else {
+                noResult.classList.add('hidden');
+            }
+        }
+
+        searchInputSP.addEventListener('input', (e) => filterTools(e.target.value));
+        searchInputPC.addEventListener('input', (e) => filterTools(e.target.value));
+    </script>
 </body>
 </html>
