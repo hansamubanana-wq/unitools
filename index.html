@@ -11,11 +11,11 @@
     
     <meta name="google-site-verification" content="1mEF67U5oje9Z0aliv19iWVpQri-DEf4J9ORBRj4_eU" />
     
-    <title>UniTools | 便利ツールWebアプリ - 2026年カウントダウン・水抜き音...</title>
-    <meta name="description" content="インストール不要・完全無料のWebツール集。みんなのリクエストで機能が増える！2026年へのカウントダウン、スマホの水抜き音、画像形式変換、QR作成、BMI計算機などがブラウザだけですぐに使えます。">
+    <title>UniTools | シンプルで便利な無料Webツール集</title>
+    <meta name="description" content="インストール不要・完全無料のWebツール集。2026年カウントダウン、水抜き音、画像変換、QR作成、BMI計算などがシンプルなデザインですぐに使えます。">
     
     <meta property="og:title" content="UniTools | 便利な無料Webツール集">
-    <meta property="og:description" content="水抜き音、カウントダウンなどがすぐ使える！次はどんな機能を追加する？">
+    <meta property="og:description" content="登録不要・インストール不要ですぐ使える便利ツール集。">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://vexel-lab-hq.vercel.app/">
     <meta property="og:site_name" content="UniTools">
@@ -23,180 +23,208 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* スクロールバーのデザイン */
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: #f1f1f1; 
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #ccc; 
-            border-radius: 3px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #aaa; 
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* スクロールバーのデザイン（控えめに） */
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f8fafc; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 2px; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 flex flex-col min-h-screen">
+<body class="bg-slate-50 text-slate-700 flex flex-col min-h-screen">
 
-    <header class="bg-white shadow sticky top-0 z-50">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <a href="index.html" class="text-xl font-bold text-blue-600">
-                <i class="fa-solid fa-cube"></i> UniTools
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-xl font-bold text-slate-800 tracking-tight flex items-center gap-2">
+                <div class="w-8 h-8 bg-blue-600 text-white rounded-lg flex items-center justify-center text-sm">
+                    <i class="fa-solid fa-cube"></i>
+                </div>
+                UniTools
             </a>
-            <span class="text-xs font-bold bg-blue-100 text-blue-600 px-2 py-1 rounded">V1.5</span>
+            <span class="text-xs font-semibold bg-slate-100 text-slate-500 px-3 py-1 rounded-full border border-slate-200">Free Tools</span>
         </div>
     </header>
 
-    <div class="container mx-auto px-4 py-10 flex-grow">
-        <h1 class="text-3xl font-bold text-center mb-2">必要なツールは、すべてここに。</h1>
-        <p class="text-center text-gray-500 mb-8">インストール不要・完全無料・みんなで作るツール集</p>
+    <div class="container mx-auto px-4 py-12 flex-grow max-w-6xl">
+        
+        <div class="text-center mb-12">
+            <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-3">必要なツールを、シンプルに。</h1>
+            <p class="text-slate-500">登録不要・完全無料・インストール不要</p>
+        </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        <div class="mb-10">
+            <a href="tools/countdown.html" class="block bg-white rounded-2xl shadow-sm border border-slate-200 p-8 hover:shadow-md hover:border-blue-300 transition group">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div class="flex items-start gap-4">
+                        <div class="w-14 h-14 bg-slate-900 text-white rounded-xl flex items-center justify-center text-2xl shadow-sm">
+                            <i class="fa-regular fa-clock"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded mb-1 inline-block">PICK UP</span>
+                            <h2 class="text-2xl font-bold text-slate-800 group-hover:text-blue-600 transition">2026年カウントダウン</h2>
+                            <p class="text-slate-500 mt-1 text-sm">年越しまでの残り時間を秒単位で正確に計測します。</p>
+                        </div>
+                    </div>
+                    <div class="bg-slate-50 px-6 py-3 rounded-full border border-slate-100 text-slate-600 text-sm font-bold group-hover:bg-blue-600 group-hover:text-white transition">
+                        今すぐチェック <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
             
-            <div class="md:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                <h2 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
-                    <i class="fa-solid fa-bell text-yellow-500 mr-2"></i> 更新情報 / News
-                </h2>
-                <div class="space-y-4 h-32 overflow-y-auto pr-2 custom-scrollbar">
+            <div class="md:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                <h2 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 border-b pb-2">News / Updates</h2>
+                <div class="space-y-4 h-32 overflow-y-auto custom-scrollbar">
                     
-                    <div class="border-l-4 border-blue-500 pl-4 py-1">
-                        <p class="text-xs text-gray-400">2025.12.14</p>
-                        <p class="text-sm font-bold text-gray-700">「2026年カウントダウン」を追加しました！🎍</p>
-                        <p class="text-xs text-blue-500 mt-1"><i class="fa-brands fa-tiktok"></i> TikTokリクエスト反映 ✨</p>
+                    <div class="flex gap-4 items-start">
+                        <span class="text-xs text-slate-400 whitespace-nowrap pt-1">12.14</span>
+                        <div>
+                            <p class="text-sm font-bold text-slate-700">「2026年カウントダウン」を追加</p>
+                            <p class="text-xs text-slate-500">TikTokでのリクエストを反映しました ✨</p>
+                        </div>
                     </div>
 
-                    <div class="border-l-4 border-teal-500 pl-4 py-1">
-                        <p class="text-xs text-gray-400">2025.12.13</p>
-                        <p class="text-sm font-bold text-gray-700">「BMI計算」「反射神経テスト」など一挙5ツール追加！</p>
+                    <div class="flex gap-4 items-start">
+                        <span class="text-xs text-slate-400 whitespace-nowrap pt-1">12.13</span>
+                        <div>
+                            <p class="text-sm font-bold text-slate-700">ツール5種を一斉追加</p>
+                            <p class="text-xs text-slate-500">BMI、反射神経テスト、QR作成など</p>
+                        </div>
                     </div>
 
-                    <div class="border-l-4 border-gray-300 pl-4 py-1">
-                        <p class="text-xs text-gray-400">2025.12.12</p>
-                        <p class="text-sm font-bold text-gray-700">UniTools 正式リリース 🎉</p>
+                    <div class="flex gap-4 items-start">
+                        <span class="text-xs text-slate-400 whitespace-nowrap pt-1">12.12</span>
+                        <div>
+                            <p class="text-sm font-bold text-slate-700">UniTools 正式公開</p>
+                        </div>
                     </div>
 
                 </div>
             </div>
 
-            <div class="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-xl shadow-md p-6 text-white flex flex-col justify-center items-center text-center relative overflow-hidden group">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full blur-2xl transform translate-x-10 -translate-y-10 group-hover:scale-110 transition"></div>
-                
-                <h2 class="text-lg font-bold mb-2">
-                    <i class="fa-solid fa-lightbulb text-yellow-300"></i> 次は何作る？
-                </h2>
-                <p class="text-sm text-blue-100 mb-4">あなたのアイデアが次のアップデートで採用されるかも！</p>
-                <a href="contact.html" class="bg-white text-blue-700 font-bold py-2 px-6 rounded-full shadow hover:bg-yellow-300 hover:text-blue-900 transition w-full">
-                    リクエストを送る <i class="fa-solid fa-paper-plane ml-1"></i>
+            <div class="bg-blue-50 rounded-2xl border border-blue-100 p-6 text-center flex flex-col justify-center items-center">
+                <div class="w-10 h-10 bg-white text-blue-600 rounded-full flex items-center justify-center shadow-sm mb-3">
+                    <i class="fa-solid fa-lightbulb"></i>
+                </div>
+                <h2 class="text-base font-bold text-slate-800 mb-1">機能リクエスト</h2>
+                <p class="text-xs text-slate-500 mb-4">「こんな機能が欲しい」を教えてください。<br>開発の参考にさせていただきます。</p>
+                <a href="contact.html" class="w-full bg-white text-slate-700 border border-slate-200 font-bold py-2 px-4 rounded-lg hover:border-blue-400 hover:text-blue-600 transition text-sm shadow-sm">
+                    アイデアを送る
                 </a>
             </div>
 
         </div>
 
-        <h3 class="text-xl font-bold text-gray-700 mb-6 px-2 border-l-4 border-blue-500">ツール一覧</h3>
+        <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
+            <i class="fa-solid fa-layer-group text-slate-400"></i> All Tools
+        </h3>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
             
-            <a href="tools/countdown.html" class="md:col-span-3 bg-gradient-to-r from-slate-800 to-slate-900 p-6 rounded-xl shadow-lg border border-slate-700 hover:scale-[1.01] transition relative overflow-hidden group">
-                <div class="relative z-10 flex items-center justify-between">
-                    <div>
-                        <span class="bg-yellow-500 text-black text-xs font-bold px-2 py-1 rounded mb-2 inline-block">NEW</span>
-                        <h3 class="font-bold text-xl text-white">2026年カウントダウン</h3>
-                        <p class="text-sm text-gray-300 mt-1">年越しまでの時間を秒単位で計測中。</p>
+            <a href="tools/water.html" class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-droplet"></i>
                     </div>
-                    <div class="text-3xl text-yellow-500">
-                        <i class="fa-regular fa-clock"></i>
+                    <h3 class="font-bold text-slate-700 group-hover:text-blue-600">スマホ水抜き音</h3>
+                </div>
+                <p class="text-xs text-slate-500 leading-relaxed">スピーカーに入った水を音の振動で排出します。</p>
+            </a>
+
+            <a href="tools/bmi.html" class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:border-teal-400 hover:shadow-md transition group">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-10 h-10 bg-teal-50 text-teal-600 rounded-lg flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-weight-scale"></i>
                     </div>
+                    <h3 class="font-bold text-slate-700 group-hover:text-teal-600">BMI計算機</h3>
                 </div>
+                <p class="text-xs text-slate-500 leading-relaxed">身長と体重を入力するだけで肥満度をチェック。</p>
             </a>
 
-            <a href="tools/water.html" class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition border hover:border-blue-400 group">
-                <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center text-xl mb-4">
-                    <i class="fa-solid fa-droplet"></i>
+            <a href="tools/reaction.html" class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:border-red-400 hover:shadow-md transition group">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-10 h-10 bg-red-50 text-red-600 rounded-lg flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-700 group-hover:text-red-600">反射神経テスト</h3>
                 </div>
-                <h3 class="font-bold text-lg group-hover:text-blue-600">スマホ水抜き音</h3>
-                <p class="text-sm text-gray-500 mt-2">165Hzの重低音でスピーカーの水を排出します。</p>
+                <p class="text-xs text-slate-500 leading-relaxed">あなたの反応速度をミリ秒単位で計測します。</p>
             </a>
 
-            <a href="tools/bmi.html" class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition border hover:border-teal-400 group">
-                <div class="w-12 h-12 bg-teal-100 text-teal-600 rounded-lg flex items-center justify-center text-xl mb-4">
-                    <i class="fa-solid fa-weight-scale"></i>
+            <a href="tools/qrcode.html" class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:border-gray-400 hover:shadow-md transition group">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-10 h-10 bg-gray-100 text-gray-600 rounded-lg flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-qrcode"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-700 group-hover:text-gray-800">QRコード作成</h3>
                 </div>
-                <h3 class="font-bold text-lg group-hover:text-teal-600">BMI計算機</h3>
-                <p class="text-sm text-gray-500 mt-2">身長と体重を入力して肥満度を一瞬でチェック。</p>
+                <p class="text-xs text-slate-500 leading-relaxed">文字やURLを一瞬でQRコード画像に変換。</p>
             </a>
 
-            <a href="tools/reaction.html" class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition border hover:border-red-400 group">
-                <div class="w-12 h-12 bg-red-100 text-red-600 rounded-lg flex items-center justify-center text-xl mb-4">
-                    <i class="fa-solid fa-bolt"></i>
+            <a href="tools/tts.html" class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:border-pink-400 hover:shadow-md transition group">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-10 h-10 bg-pink-50 text-pink-600 rounded-lg flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-volume-high"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-700 group-hover:text-pink-600">読み上げメーカー</h3>
                 </div>
-                <h3 class="font-bold text-lg group-hover:text-red-600">反射神経テスト</h3>
-                <p class="text-sm text-gray-500 mt-2">あなたの反応速度は何ミリ秒？友達と勝負！</p>
+                <p class="text-xs text-slate-500 leading-relaxed">入力したテキストをAI音声で読み上げます。</p>
             </a>
 
-            <a href="tools/qrcode.html" class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition border hover:border-gray-600 group">
-                <div class="w-12 h-12 bg-gray-200 text-gray-800 rounded-lg flex items-center justify-center text-xl mb-4">
-                    <i class="fa-solid fa-qrcode"></i>
+            <a href="tools/dice.html" class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:border-yellow-400 hover:shadow-md transition group">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-10 h-10 bg-yellow-50 text-yellow-600 rounded-lg flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-dice"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-700 group-hover:text-yellow-600">サイコロ＆コイン</h3>
                 </div>
-                <h3 class="font-bold text-lg group-hover:text-gray-800">QRコード作成</h3>
-                <p class="text-sm text-gray-500 mt-2">好きな文字やURLを一瞬でQR画像に変換。</p>
+                <p class="text-xs text-slate-500 leading-relaxed">運試しやゲームに使えるランダム生成ツール。</p>
             </a>
 
-            <a href="tools/tts.html" class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition border hover:border-pink-400 group">
-                <div class="w-12 h-12 bg-pink-100 text-pink-600 rounded-lg flex items-center justify-center text-xl mb-4">
-                    <i class="fa-solid fa-volume-high"></i>
+            <a href="tools/converter.html" class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:border-purple-400 hover:shadow-md transition group">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-10 h-10 bg-purple-50 text-purple-600 rounded-lg flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-image"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-700 group-hover:text-purple-600">画像形式変換</h3>
                 </div>
-                <h3 class="font-bold text-lg group-hover:text-pink-600">読み上げメーカー</h3>
-                <p class="text-sm text-gray-500 mt-2">入力したテキストをAI音声で読み上げます。</p>
+                <p class="text-xs text-slate-500 leading-relaxed">JPG, PNG, WebPを相互に一瞬で変換。</p>
             </a>
 
-            <a href="tools/dice.html" class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition border hover:border-yellow-400 group">
-                <div class="w-12 h-12 bg-yellow-100 text-yellow-600 rounded-lg flex items-center justify-center text-xl mb-4">
-                    <i class="fa-solid fa-dice"></i>
+            <a href="tools/password.html" class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:border-green-400 hover:shadow-md transition group">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-10 h-10 bg-green-50 text-green-600 rounded-lg flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-key"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-700 group-hover:text-green-600">パスワード生成</h3>
                 </div>
-                <h3 class="font-bold text-lg group-hover:text-yellow-600">サイコロ＆コイン</h3>
-                <p class="text-sm text-gray-500 mt-2">ボードゲームや運試しに。タップで振れます。</p>
+                <p class="text-xs text-slate-500 leading-relaxed">安全で強力なランダムパスワードを作成。</p>
             </a>
 
-            <a href="tools/converter.html" class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition border hover:border-purple-400 group">
-                <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center text-xl mb-4">
-                    <i class="fa-solid fa-image"></i>
+            <a href="tools/counter.html" class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:border-indigo-400 hover:shadow-md transition group">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-lg flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-pen-nib"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-700 group-hover:text-indigo-600">文字数カウンター</h3>
                 </div>
-                <h3 class="font-bold text-lg group-hover:text-purple-600">画像形式変換</h3>
-                <p class="text-sm text-gray-500 mt-2">JPG, PNG, WebPを相互に一瞬で変換。</p>
-            </a>
-
-            <a href="tools/password.html" class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition border hover:border-green-400 group">
-                <div class="w-12 h-12 bg-green-100 text-green-600 rounded-lg flex items-center justify-center text-xl mb-4">
-                    <i class="fa-solid fa-key"></i>
-                </div>
-                <h3 class="font-bold text-lg group-hover:text-green-600">強力パスワード生成</h3>
-                <p class="text-sm text-gray-500 mt-2">安全なランダムパスワードを一瞬で作ります。</p>
-            </a>
-
-            <a href="tools/counter.html" class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition border hover:border-indigo-400 group">
-                <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center text-xl mb-4">
-                    <i class="fa-solid fa-pen-nib"></i>
-                </div>
-                <h3 class="font-bold text-lg group-hover:text-indigo-600">文字数カウンター</h3>
-                <p class="text-sm text-gray-500 mt-2">文字数・行数・原稿用紙の枚数をリアルタイム計算。</p>
+                <p class="text-xs text-slate-500 leading-relaxed">文字数・行数・原稿用紙換算をリアルタイム計算。</p>
             </a>
 
         </div>
     </div>
     
-    <footer class="bg-gray-800 text-gray-400 py-8 mt-12">
+    <footer class="bg-white border-t border-slate-200 mt-12 py-8">
         <div class="container mx-auto px-4 text-center">
-            <div class="mb-4 space-x-4">
-                <a href="index.html" class="hover:text-white transition">ホーム</a>
-                <span>|</span>
-                <a href="privacy.html" class="hover:text-white transition">プライバシーポリシー</a>
-                <span>|</span>
-                <a href="contact.html" class="hover:text-white transition">お問い合わせ</a>
+            <div class="mb-4 space-x-6 text-sm font-medium text-slate-500">
+                <a href="index.html" class="hover:text-blue-600 transition">ホーム</a>
+                <a href="privacy.html" class="hover:text-blue-600 transition">プライバシー</a>
+                <a href="contact.html" class="hover:text-blue-600 transition">リクエスト・お問い合わせ</a>
             </div>
-            <p class="text-sm">&copy; 2025 UniTools | Created by Vexel Lab</p>
+            <p class="text-xs text-slate-400">&copy; 2025 UniTools | Created by Vexel Lab</p>
         </div>
     </footer>
 </body>
