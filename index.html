@@ -12,16 +12,32 @@
     <meta name="google-site-verification" content="1mEF67U5oje9Z0aliv19iWVpQri-DEf4J9ORBRj4_eU" />
     
     <title>UniTools | 便利ツールWebアプリ - 2026年カウントダウン・水抜き音...</title>
-    <meta name="description" content="インストール不要・完全無料のWebツール集。2026年へのカウントダウン、スマホの水抜き音、画像形式変換、QR作成、BMI計算機、反射神経テストなどがブラウザだけですぐに使えます。">
+    <meta name="description" content="インストール不要・完全無料のWebツール集。みんなのリクエストで機能が増える！2026年へのカウントダウン、スマホの水抜き音、画像形式変換、QR作成、BMI計算機などがブラウザだけですぐに使えます。">
     
     <meta property="og:title" content="UniTools | 便利な無料Webツール集">
-    <meta property="og:description" content="2026年カウントダウン、水抜き音、BMI計算などが登録不要ですぐ使える！">
+    <meta property="og:description" content="水抜き音、カウントダウンなどがすぐ使える！次はどんな機能を追加する？">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://vexel-lab-hq.vercel.app/">
     <meta property="og:site_name" content="UniTools">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* スクロールバーのデザイン */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #ccc; 
+            border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #aaa; 
+        }
+    </style>
 </head>
 <body class="bg-slate-50 text-slate-800 flex flex-col min-h-screen">
 
@@ -35,27 +51,67 @@
     </header>
 
     <div class="container mx-auto px-4 py-10 flex-grow">
-        
-        <div class="mb-10">
-            <a href="tools/countdown.html" class="block bg-gradient-to-r from-slate-800 to-slate-900 rounded-2xl shadow-xl p-8 text-white hover:scale-[1.01] transition relative overflow-hidden group">
-                <div class="relative z-10 flex flex-col md:flex-row items-center justify-between">
-                    <div>
-                        <span class="bg-yellow-500 text-black text-xs font-bold px-2 py-1 rounded mb-2 inline-block">SEASONAL</span>
-                        <h2 class="text-2xl md:text-3xl font-bold mb-2">2026年まであと何日？</h2>
-                        <p class="text-gray-300">秒単位で年越しをカウントダウン。</p>
+        <h1 class="text-3xl font-bold text-center mb-2">必要なツールは、すべてここに。</h1>
+        <p class="text-center text-gray-500 mb-8">インストール不要・完全無料・みんなで作るツール集</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            
+            <div class="md:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <h2 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                    <i class="fa-solid fa-bell text-yellow-500 mr-2"></i> 更新情報 / News
+                </h2>
+                <div class="space-y-4 h-32 overflow-y-auto pr-2 custom-scrollbar">
+                    
+                    <div class="border-l-4 border-blue-500 pl-4 py-1">
+                        <p class="text-xs text-gray-400">2025.12.14</p>
+                        <p class="text-sm font-bold text-gray-700">「2026年カウントダウン」を追加しました！🎍</p>
+                        <p class="text-xs text-blue-500 mt-1"><i class="fa-brands fa-tiktok"></i> TikTokリクエスト反映 ✨</p>
                     </div>
-                    <div class="mt-6 md:mt-0 bg-white/10 px-6 py-3 rounded-lg backdrop-blur text-yellow-400 font-mono text-xl">
-                        <i class="fa-regular fa-clock"></i> CHECK NOW
+
+                    <div class="border-l-4 border-teal-500 pl-4 py-1">
+                        <p class="text-xs text-gray-400">2025.12.13</p>
+                        <p class="text-sm font-bold text-gray-700">「BMI計算」「反射神経テスト」など一挙5ツール追加！</p>
                     </div>
+
+                    <div class="border-l-4 border-gray-300 pl-4 py-1">
+                        <p class="text-xs text-gray-400">2025.12.12</p>
+                        <p class="text-sm font-bold text-gray-700">UniTools 正式リリース 🎉</p>
+                    </div>
+
                 </div>
-                <div class="absolute top-0 right-0 w-64 h-64 bg-yellow-500 rounded-full blur-3xl opacity-10 group-hover:opacity-20 transition"></div>
-            </a>
+            </div>
+
+            <div class="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-xl shadow-md p-6 text-white flex flex-col justify-center items-center text-center relative overflow-hidden group">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full blur-2xl transform translate-x-10 -translate-y-10 group-hover:scale-110 transition"></div>
+                
+                <h2 class="text-lg font-bold mb-2">
+                    <i class="fa-solid fa-lightbulb text-yellow-300"></i> 次は何作る？
+                </h2>
+                <p class="text-sm text-blue-100 mb-4">あなたのアイデアが次のアップデートで採用されるかも！</p>
+                <a href="contact.html" class="bg-white text-blue-700 font-bold py-2 px-6 rounded-full shadow hover:bg-yellow-300 hover:text-blue-900 transition w-full">
+                    リクエストを送る <i class="fa-solid fa-paper-plane ml-1"></i>
+                </a>
+            </div>
+
         </div>
 
         <h3 class="text-xl font-bold text-gray-700 mb-6 px-2 border-l-4 border-blue-500">ツール一覧</h3>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             
+            <a href="tools/countdown.html" class="md:col-span-3 bg-gradient-to-r from-slate-800 to-slate-900 p-6 rounded-xl shadow-lg border border-slate-700 hover:scale-[1.01] transition relative overflow-hidden group">
+                <div class="relative z-10 flex items-center justify-between">
+                    <div>
+                        <span class="bg-yellow-500 text-black text-xs font-bold px-2 py-1 rounded mb-2 inline-block">NEW</span>
+                        <h3 class="font-bold text-xl text-white">2026年カウントダウン</h3>
+                        <p class="text-sm text-gray-300 mt-1">年越しまでの時間を秒単位で計測中。</p>
+                    </div>
+                    <div class="text-3xl text-yellow-500">
+                        <i class="fa-regular fa-clock"></i>
+                    </div>
+                </div>
+            </a>
+
             <a href="tools/water.html" class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition border hover:border-blue-400 group">
                 <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center text-xl mb-4">
                     <i class="fa-solid fa-droplet"></i>
