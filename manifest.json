@@ -1,6 +1,6 @@
 {
-  "name": "UniTools",
-  "short_name": "UniTools",
+  "name": "VexTools",
+  "short_name": "VexTools",
   "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
