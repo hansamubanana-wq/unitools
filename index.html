@@ -20,11 +20,46 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 
     <style>
-        body { font-family: 'Noto Sans JP', sans-serif; letter-spacing: 0.05em; }
-        .glass-panel { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.6); }
+        body { font-family: 'Noto Sans JP', sans-serif; letter-spacing: 0.05em; transition: background-color 0.5s, color 0.5s; }
+        .glass-panel { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.6); transition: background-color 0.5s; }
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 2px; }
+
+        /* ▼▼▼ 夜間モード（ダークモード）のデザイン定義 ▼▼▼ */
+        body.night-mode {
+            background-color: #0f172a; /* とても濃い紺色 */
+            color: #e2e8f0;
+        }
+        body.night-mode .glass-panel {
+            background: rgba(15, 23, 42, 0.9);
+            border-color: #334155;
+        }
+        body.night-mode .bg-white {
+            background-color: #1e293b; /* カード背景：濃いグレー */
+            border-color: #334155;
+        }
+        body.night-mode .text-slate-800, 
+        body.night-mode .text-slate-700 {
+            color: #f1f5f9; /* 白文字 */
+        }
+        body.night-mode .text-slate-500,
+        body.night-mode .text-slate-400 {
+            color: #94a3b8; /* 薄いグレー文字 */
+        }
+        /* 検索バーの調整 */
+        body.night-mode input {
+            background-color: #334155;
+            color: white;
+            border-color: #475569;
+        }
+        body.night-mode input::placeholder {
+            color: #94a3b8;
+        }
+        /* アイコン背景の調整（眩しくないように） */
+        body.night-mode .tool-card .rounded-lg {
+            background-color: #0f172a; 
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 flex flex-col min-h-screen relative">
@@ -46,8 +81,13 @@
                 <input type="text" id="searchInputPC" placeholder="ツールを検索..." class="w-full bg-slate-100 border border-slate-200 rounded-full pl-9 pr-4 py-1.5 text-sm focus:outline-none focus:bg-white focus:border-blue-400 transition">
             </div>
 
-            <div class="md:hidden text-[10px] font-bold text-slate-500 border border-slate-300 px-2 py-0.5 rounded-full">
-                All Free
+            <div class="flex items-center gap-3">
+                <div id="timeIcon" class="text-yellow-500 text-lg">
+                    <i class="fa-solid fa-sun"></i>
+                </div>
+                <div class="md:hidden text-[10px] font-bold text-slate-500 border border-slate-300 px-2 py-0.5 rounded-full">
+                    Free
+                </div>
             </div>
         </div>
     </header>
@@ -67,11 +107,11 @@
                 <div class="space-y-2 h-full overflow-y-auto custom-scrollbar pb-6">
                     <div class="text-xs">
                         <span class="font-mono text-slate-400 mr-2">12.15</span>
-                        <span class="font-bold text-slate-700">検索機能を追加しました</span>
+                        <span class="font-bold text-slate-700">自動ダークモード(夜間)対応</span>
                     </div>
                     <div class="text-xs">
                         <span class="font-mono text-slate-400 mr-2">12.15</span>
-                        <span class="font-bold text-slate-700">実用ツール5種追加</span>
+                        <span class="font-bold text-slate-700">検索機能・ツール5種追加</span>
                     </div>
                 </div>
             </div>
@@ -233,6 +273,29 @@
     </footer>
 
     <script>
+        // 1. 自動ダークモード処理
+        function checkTime() {
+            const hour = new Date().getHours();
+            const body = document.body;
+            const icon = document.getElementById('timeIcon');
+
+            // 18時〜翌朝6時はダークモード
+            if (hour >= 18 || hour < 6) {
+                body.classList.add('night-mode');
+                if(icon) icon.innerHTML = '<i class="fa-solid fa-moon text-yellow-300"></i>';
+            } else {
+                body.classList.remove('night-mode');
+                if(icon) icon.innerHTML = '<i class="fa-solid fa-sun text-orange-400"></i>';
+            }
+        }
+        
+        // ページ読み込み時に実行
+        checkTime();
+        // 1分ごとにチェック（開いたまま朝/夜が変わったとき用）
+        setInterval(checkTime, 60000);
+
+
+        // 2. 検索機能
         const searchInputSP = document.getElementById('searchInputSP');
         const searchInputPC = document.getElementById('searchInputPC');
         const toolCards = document.querySelectorAll('.tool-card');
@@ -244,7 +307,6 @@
             query = query.toLowerCase().trim();
             let hasResult = false;
 
-            // 検索中はインフォメーションを隠す
             if(query.length > 0) {
                 infoArea.classList.add('hidden');
             } else {
@@ -263,7 +325,6 @@
                 }
             });
 
-            // カテゴリごとの表示制御（全部隠れてたらカテゴリ名も消す）
             categories.forEach(cat => {
                 const visibleCards = cat.querySelectorAll('.tool-card:not(.hidden)');
                 if (visibleCards.length === 0) {
@@ -273,7 +334,6 @@
                 }
             });
 
-            // 結果なし表示
             if (!hasResult && query.length > 0) {
                 noResult.classList.remove('hidden');
             } else {
