@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ポモドーロタイマー | UniTools</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6703043752248417" crossorigin="anonymous"></script>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛠️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style> body { font-family: 'Noto Sans JP', sans-serif; } .mono { font-family: 'Share Tech Mono', monospace; } </style>
+</head>
+<body class="bg-red-50 text-slate-700 min-h-screen flex flex-col transition-colors duration-500" id="body">
+    <header class="p-6 bg-white border-b border-slate-200 sticky top-0 z-50">
+        <a href="../index.html" class="text-slate-500 hover:text-blue-600 font-bold transition flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> TOPに戻る</a>
+    </header>
+    <main class="flex-grow container mx-auto px-6 py-12 max-w-md text-center">
+        <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
+            <h1 class="text-2xl font-bold text-slate-800 mb-6">集中タイマー</h1>
+            
+            <div class="flex justify-center gap-2 mb-8">
+                <button onclick="setMode(25)" class="px-4 py-2 rounded-full bg-red-100 text-red-600 font-bold text-sm hover:bg-red-200 transition">25分（集中）</button>
+                <button onclick="setMode(5)" class="px-4 py-2 rounded-full bg-blue-100 text-blue-600 font-bold text-sm hover:bg-blue-200 transition">5分（休憩）</button>
+            </div>
+
+            <div class="mono text-7xl font-bold text-slate-800 mb-8" id="timer">25:00</div>
+
+            <button onclick="toggle()" id="btn" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-4 rounded-xl transition shadow-lg">スタート</button>
+        </div>
+    </main>
+    <script>
+        let timeLeft = 25 * 60;
+        let timerId = null;
+        let isRunning = false;
+        
+        const display = document.getElementById('timer');
+        const btn = document.getElementById('btn');
+        const body = document.getElementById('body');
+
+        function updateDisplay() {
+            const m = Math.floor(timeLeft / 60);
+            const s = timeLeft % 60;
+            display.innerText = `${m < 10 ? '0'+m : m}:${s < 10 ? '0'+s : s}`;
+        }
+
+        function setMode(min) {
+            clearInterval(timerId);
+            isRunning = false;
+            timeLeft = min * 60;
+            updateDisplay();
+            btn.innerText = "スタート";
+            if(min === 5) {
+                body.className = "bg-blue-50 text-slate-700 min-h-screen flex flex-col transition-colors duration-500";
+                btn.className = "w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 rounded-xl transition shadow-lg";
+            } else {
+                body.className = "bg-red-50 text-slate-700 min-h-screen flex flex-col transition-colors duration-500";
+                btn.className = "w-full bg-red-500 hover:bg-red-600 text-white font-bold py-4 rounded-xl transition shadow-lg";
+            }
+        }
+
+        function toggle() {
+            if(isRunning) {
+                clearInterval(timerId);
+                isRunning = false;
+                btn.innerText = "再開";
+            } else {
+                timerId = setInterval(() => {
+                    timeLeft--;
+                    updateDisplay();
+                    if(timeLeft <= 0) {
+                        clearInterval(timerId);
+                        alert("時間です！");
+                        isRunning = false;
+                        btn.innerText = "スタート";
+                    }
+                }, 1000);
+                isRunning = true;
+                btn.innerText = "ストップ";
+            }
+        }
+    </script>
+</body>
+</html>

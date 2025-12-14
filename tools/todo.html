@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDoリスト | UniTools</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6703043752248417" crossorigin="anonymous"></script>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛠️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style> body { font-family: 'Noto Sans JP', sans-serif; } </style>
+</head>
+<body class="bg-slate-50 text-slate-700 min-h-screen flex flex-col">
+    <header class="p-6 bg-white border-b border-slate-200 sticky top-0 z-50">
+        <a href="../index.html" class="text-slate-500 hover:text-blue-600 font-bold transition flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> TOPに戻る</a>
+    </header>
+    <main class="flex-grow container mx-auto px-6 py-12 max-w-md">
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 h-full flex flex-col">
+            <h1 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2"><i class="fa-solid fa-check-double text-teal-500"></i> ToDoリスト</h1>
+            
+            <div class="flex gap-2 mb-6">
+                <input type="text" id="input" class="flex-grow p-3 bg-slate-50 border border-slate-200 rounded-xl" placeholder="やることを入力...">
+                <button onclick="add()" class="bg-teal-500 text-white px-4 rounded-xl font-bold hover:bg-teal-600"><i class="fa-solid fa-plus"></i></button>
+            </div>
+
+            <ul id="list" class="space-y-2 flex-grow overflow-y-auto"></ul>
+            <p class="text-xs text-slate-400 mt-4 text-center">※ブラウザに自動保存されます</p>
+        </div>
+    </main>
+    <script>
+        const listEl = document.getElementById('list');
+        const inputEl = document.getElementById('input');
+        let todos = JSON.parse(localStorage.getItem('unitools_todo')) || [];
+
+        function render() {
+            listEl.innerHTML = "";
+            todos.forEach((t, i) => {
+                const li = document.createElement('li');
+                li.className = "flex items-center gap-3 p-3 rounded-lg border border-slate-100 hover:bg-slate-50 transition";
+                li.innerHTML = `
+                    <button onclick="toggle(${i})" class="text-xl ${t.done ? 'text-teal-500' : 'text-slate-300'}"><i class="fa-regular ${t.done ? 'fa-circle-check' : 'fa-circle'}"></i></button>
+                    <span class="flex-grow ${t.done ? 'line-through text-slate-400' : ''}">${t.text}</span>
+                    <button onclick="del(${i})" class="text-slate-300 hover:text-red-400"><i class="fa-solid fa-trash"></i></button>
+                `;
+                listEl.appendChild(li);
+            });
+            localStorage.setItem('unitools_todo', JSON.stringify(todos));
+        }
+
+        function add() {
+            if(!inputEl.value) return;
+            todos.push({ text: inputEl.value, done: false });
+            inputEl.value = "";
+            render();
+        }
+
+        function toggle(i) { todos[i].done = !todos[i].done; render(); }
+        function del(i) { todos.splice(i, 1); render(); }
+        
+        render();
+    </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>割り勘計算機 | UniTools</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6703043752248417" crossorigin="anonymous"></script>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛠️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style> body { font-family: 'Noto Sans JP', sans-serif; } </style>
+</head>
+<body class="bg-slate-50 text-slate-700 min-h-screen flex flex-col">
+    <header class="p-6 bg-white border-b border-slate-200 sticky top-0 z-50">
+        <a href="../index.html" class="text-slate-500 hover:text-blue-600 font-bold transition flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> TOPに戻る</a>
+    </header>
+    <main class="flex-grow container mx-auto px-6 py-12 max-w-md">
+        <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
+            <h1 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2"><i class="fa-solid fa-coins text-yellow-500"></i> 割り勘計算</h1>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 mb-1">合計金額 (円)</label>
+                    <input type="number" id="total" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl text-lg font-bold" placeholder="5000">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 mb-1">人数 (人)</label>
+                    <input type="number" id="people" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl text-lg font-bold" placeholder="3">
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-slate-100 text-center">
+                <p class="text-sm text-slate-400 mb-2">一人あたり</p>
+                <div class="text-4xl font-bold text-slate-800 mb-1"><span id="perPerson">0</span> 円</div>
+                <p class="text-xs text-slate-400">余り: <span id="remainder">0</span> 円</p>
+            </div>
+        </div>
+    </main>
+    <script>
+        const inputs = [document.getElementById('total'), document.getElementById('people')];
+        inputs.forEach(el => el.addEventListener('input', () => {
+            const total = Number(inputs[0].value);
+            const n = Number(inputs[1].value);
+            if(!total || !n) return;
+            
+            const per = Math.floor(total / n);
+            const rem = total % n;
+            
+            document.getElementById('perPerson').innerText = per.toLocaleString();
+            document.getElementById('remainder').innerText = rem;
+        }));
+    </script>
+</body>
+</html>

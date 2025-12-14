@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ルーレット（決める君） | UniTools</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6703043752248417" crossorigin="anonymous"></script>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛠️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style> body { font-family: 'Noto Sans JP', sans-serif; } </style>
+</head>
+<body class="bg-slate-50 text-slate-700 min-h-screen flex flex-col">
+    <header class="p-6 bg-white border-b border-slate-200 sticky top-0 z-50">
+        <a href="../index.html" class="text-slate-500 hover:text-blue-600 font-bold transition flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> TOPに戻る</a>
+    </header>
+    <main class="flex-grow container mx-auto px-6 py-12 max-w-md">
+        <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 text-center">
+            <h1 class="text-2xl font-bold text-slate-800 mb-6"><i class="fa-solid fa-arrows-spin text-green-500"></i> ルーレット</h1>
+            
+            <textarea id="items" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl mb-4 h-32 text-sm" placeholder="選択肢を改行して入力&#13;&#10;例：&#13;&#10;カレー&#13;&#10;ラーメン&#13;&#10;ハンバーガー"></textarea>
+            
+            <div id="resultBox" class="bg-slate-900 text-white p-8 rounded-xl mb-6 hidden">
+                <p class="text-xs text-slate-400 mb-2">結果は...</p>
+                <p id="result" class="text-3xl font-bold animate-bounce">???</p>
+            </div>
+
+            <button onclick="spin()" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 rounded-xl transition shadow-lg">スタート！</button>
+        </div>
+    </main>
+    <script>
+        function spin() {
+            const text = document.getElementById('items').value.trim();
+            if(!text) return;
+            const list = text.split('\n').filter(e => e.trim() !== "");
+            if(list.length === 0) return;
+
+            const resBox = document.getElementById('resultBox');
+            const resText = document.getElementById('result');
+            resBox.classList.remove('hidden');
+            
+            let count = 0;
+            const timer = setInterval(() => {
+                resText.innerText = list[Math.floor(Math.random() * list.length)];
+                count++;
+                if(count > 20) {
+                    clearInterval(timer);
+                    resText.innerText = list[Math.floor(Math.random() * list.length)];
+                    resText.classList.add('text-yellow-400');
+                }
+            }, 50);
+        }
+    </script>
+</body>
+</html>
