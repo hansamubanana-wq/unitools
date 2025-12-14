@@ -24,47 +24,65 @@
             </div>
 
             <div class="grid grid-cols-2 gap-4">
-                <button id="startStop" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 rounded-xl transition shadow">スタート</button>
-                <button id="reset" class="bg-slate-200 hover:bg-slate-300 text-slate-600 font-bold py-4 rounded-xl transition">リセット</button>
+                <button id="startStop" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 rounded-xl transition shadow active:scale-95">スタート</button>
+                <button id="reset" class="bg-slate-200 hover:bg-slate-300 text-slate-600 font-bold py-4 rounded-xl transition active:scale-95">リセット</button>
             </div>
         </div>
     </main>
     <script>
-        let startTime, updatedTime, difference, tInterval, running = false;
-        const display = document.getElementById('display');
-        const btn = document.getElementById('startStop');
+        let startTime = 0;
+        let elapsedTime = 0;
+        let timerInterval = null;
+        let isRunning = false;
 
-        btn.addEventListener('click', () => {
-            if(!running){
-                startTime = new Date().getTime();
-                tInterval = setInterval(getShowTime, 10);
-                running = true;
-                btn.innerText = "ストップ";
-                btn.className = "bg-red-500 hover:bg-red-600 text-white font-bold py-4 rounded-xl transition shadow";
+        const display = document.getElementById('display');
+        const startStopBtn = document.getElementById('startStop');
+        const resetBtn = document.getElementById('reset');
+
+        function formatTime(ms) {
+            let date = new Date(ms);
+            let m = ('0' + date.getUTCMinutes()).slice(-2);
+            let s = ('0' + date.getUTCSeconds()).slice(-2);
+            let msDisplay = ('0' + Math.floor(date.getUTCMilliseconds() / 10)).slice(-2);
+            return `${m}:${s}.${msDisplay}`;
+        }
+
+        function updateDisplay() {
+            const currentTime = Date.now();
+            const timeToDisplay = currentTime - startTime;
+            display.innerText = formatTime(timeToDisplay);
+        }
+
+        startStopBtn.addEventListener('click', () => {
+            if (!isRunning) {
+                // スタート処理
+                // 現在時刻から「すでに経過した時間」を引くことで、再開時のズレをなくす
+                startTime = Date.now() - elapsedTime;
+                timerInterval = setInterval(updateDisplay, 10);
+                isRunning = true;
+                
+                startStopBtn.innerText = "ストップ";
+                startStopBtn.className = "bg-red-500 hover:bg-red-600 text-white font-bold py-4 rounded-xl transition shadow active:scale-95";
             } else {
-                clearInterval(tInterval);
-                running = false;
-                btn.innerText = "再開";
-                btn.className = "bg-green-500 hover:bg-green-600 text-white font-bold py-4 rounded-xl transition shadow";
+                // ストップ処理
+                clearInterval(timerInterval);
+                elapsedTime = Date.now() - startTime; // 経過時間を保存
+                isRunning = false;
+
+                startStopBtn.innerText = "再開";
+                startStopBtn.className = "bg-green-500 hover:bg-green-600 text-white font-bold py-4 rounded-xl transition shadow active:scale-95";
             }
         });
 
-        document.getElementById('reset').addEventListener('click', () => {
-            clearInterval(tInterval);
-            running = false;
+        resetBtn.addEventListener('click', () => {
+            clearInterval(timerInterval);
+            isRunning = false;
+            elapsedTime = 0;
             display.innerText = "00:00.00";
-            btn.innerText = "スタート";
-            btn.className = "bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 rounded-xl transition shadow";
+            
+            startStopBtn.innerText = "スタート";
+            startStopBtn.className = "bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 rounded-xl transition shadow active:scale-95";
         });
-
-        function getShowTime(){
-            updatedTime = new Date().getTime();
-            difference = updatedTime - startTime;
-            let m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-            let s = Math.floor((difference % (1000 * 60)) / 1000);
-            let ms = Math.floor((difference % 1000) / 10);
-            display.innerText = (m < 10 ? "0" + m : m) + ":" + (s < 10 ? "0" + s : s) + "." + (ms < 10 ? "0" + ms : ms);
-        }
     </script>
 </body>
 </html>
